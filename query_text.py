@@ -29,7 +29,6 @@ with open(text_file, 'r') as infile:
     text = infile.read().replace('\n', '')
 
 print "Looking for", query, "'in ", text_file
-print text
 
 t1 = timeit.timeit()
 result = findQuery(query, text)
