@@ -1,0 +1,1 @@
+#redirect [[biblical hermeneutics]]  {{redirect category shell|1= {{r from camelcase}} }}

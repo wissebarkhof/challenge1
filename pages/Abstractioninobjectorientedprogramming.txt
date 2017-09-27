@@ -1,0 +1,1 @@
+#redirect [[abstraction (software engineering)#abstraction in object oriented programming]]  {{redirect category shell|1= {{r to section}} }}

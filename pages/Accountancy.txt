@@ -1,0 +1,1 @@
+#redirect [[accounting]]  {{rcat shell| {{r move}} {{r from related word}} {{r hatnote}} {{r p}} }}

@@ -1,0 +1,1 @@
+#redirect [[ashmore and cartier islands#economy and migration]]  {{redirect category shell| {{r from subpage}} {{r to section}} }}

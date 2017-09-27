@@ -1,0 +1,6 @@
+TO DO
+
+
+1) Get a subset to test
+2) Process the whole file 63gb   --> Create texts and dicts(keys are words values are indexes)
+3)

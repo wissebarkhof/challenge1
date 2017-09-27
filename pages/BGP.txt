@@ -1,0 +1,1 @@
+#redirect [[border gateway protocol]]  {{redirect category shell|1= {{r from abbreviation}} }}

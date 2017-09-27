@@ -1,0 +1,1 @@
+#redirect [[baruch spinoza]]  {{redirect category shell|1= {{r from camelcase}} }}

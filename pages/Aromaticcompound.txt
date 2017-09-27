@@ -1,0 +1,1 @@
+#redirect [[aromaticity]]  {{redirect category shell| {{wikidata-redirect}} {{r from move}} {{r from merge}} {{r with possibilities}} {{r hatnote}} {{r printworthy}} }}

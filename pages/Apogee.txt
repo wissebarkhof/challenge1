@@ -1,0 +1,1 @@
+#redirect [[apsis]]  {{rcat shell| {{r hatnote}} {{r subtopic}} {{r printworthy}} {{r with possibilities}} }} {{wikidata-redirect}}

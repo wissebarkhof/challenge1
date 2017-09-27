@@ -1,0 +1,1 @@
+#redirect [[assistive_technology]]  {{redirect category shell|1= {{r from camelcase}} }}

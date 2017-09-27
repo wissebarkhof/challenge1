@@ -1,0 +1,1 @@
+#redirect [[ayn rand]]  {{redirect category shell|1= {{r from camelcase}} }}

@@ -1,0 +1,1 @@
+#redirect [[list of business schools in asia]]  {{redirect category shell| {{r from camelcase}} {{r from subpage}} }}

@@ -1,0 +1,1 @@
+#redirect [[alzheimer's disease]]  {{redirect category shell|1= {{r from missing punctuation}} }}

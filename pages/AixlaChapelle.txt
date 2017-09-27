@@ -1,0 +1,1 @@
+#redirect [[aachen]]  {{redirect category shell|1= {{r from alternative name}} }}

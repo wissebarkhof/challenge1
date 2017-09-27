@@ -1,0 +1,1 @@
+#redirect [[anarchism]]  {{rcat shell| {{r merge}} {{r hatnote}} {{r from related word}} {{r unprintworthy}} }}

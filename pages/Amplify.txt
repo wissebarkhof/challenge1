@@ -1,0 +1,1 @@
+#redirect [[amplification]]  {{redirect category shell| {{r from verb}} {{r from ambig}} }}

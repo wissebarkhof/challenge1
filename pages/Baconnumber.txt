@@ -1,0 +1,1 @@
+#redirect [[six degrees of kevin bacon#bacon numbers]]  {{redirect category shell|1= {{r from merge}} }}

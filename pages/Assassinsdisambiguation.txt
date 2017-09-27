@@ -1,0 +1,1 @@
+#redirect [[assassin (disambiguation)]]  {{rcat shell| {{r from plural}} {{r to disambiguation page}} }}

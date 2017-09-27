@@ -1,0 +1,1 @@
+#redirect [[clan mcduck#angus "pothole" mcduck]]  {{rcat shell| {{r from fictional character|disney animated}} {{r to section}} }}

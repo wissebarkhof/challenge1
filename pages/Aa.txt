@@ -1,0 +1,1 @@
+#redirect [[aa]]  {{redirect category shell|1= {{r from alternative capitalization}} }}

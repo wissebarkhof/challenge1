@@ -1,0 +1,1 @@
+#redirect [[civilization]]  {{rcat shell| {{r from merge}} {{r long}} {{r subtopic}} {{r p}} }}

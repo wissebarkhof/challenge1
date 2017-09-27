@@ -1,0 +1,1 @@
+#redirect [[alumnus]]  {{rcat shell| {{r from related word}} {{r from gender}} }}

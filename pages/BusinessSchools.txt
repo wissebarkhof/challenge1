@@ -1,0 +1,1 @@
+#redirect [[business school]]  {{redirect category shell|1= {{r from other capitalisation}} {{r from plural}} }}

@@ -1,0 +1,1 @@
+#redirect [[aesthetics]]  {{rcat shell| {{r move}} {{r to plural|printworthy}} {{r from adjective}} {{r from noun}} }}

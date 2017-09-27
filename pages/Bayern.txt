@@ -1,0 +1,1 @@
+#redirect [[bavaria]]  {{redirect category shell|1= {{r from alternative language|de}} }}

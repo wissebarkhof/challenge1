@@ -1,0 +1,1 @@
+#redirect [[antoine de saint-exupéry]]  {{rcat shell| {{r merge}} {{r from title without diacritics}} {{r unprintworthy}} }}

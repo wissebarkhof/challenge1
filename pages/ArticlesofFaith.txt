@@ -1,0 +1,1 @@
+#redirect [[creed]]  {{redirect category shell|1= {{r from merge|creed}} }}

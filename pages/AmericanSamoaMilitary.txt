@@ -1,0 +1,1 @@
+#redirect [[american samoa]]  {{redirect category shell|1= {{r from subpage}} }}

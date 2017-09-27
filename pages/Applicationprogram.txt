@@ -1,0 +1,1 @@
+#redirect [[application software]]  {{redirect category shell|1= {{r from alternative name}} }}

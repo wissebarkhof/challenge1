@@ -1,0 +1,1 @@
+#redirect [[belgium]]  {{redirect category shell| {{r from subpage}} {{r from alternative language|nl|en}} }}

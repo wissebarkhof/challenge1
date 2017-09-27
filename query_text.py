@@ -1,7 +1,8 @@
 import re
 import ast
 import sys
-import timeit
+import time
+
 
 def buildRegex(query):
     elements = query.split()
@@ -30,11 +31,11 @@ with open(text_file, 'r') as infile:
 
 print "Looking for", query, "'in ", text_file
 
-t1 = timeit.timeit()
+t1 = time.clock()
 result = findQuery(query, text)
-t2 = timeit.timeit()
+t2 = time.clock()
 
-print 'Found', len(result), 'results in ', t2 - t1 , 'ms'
+print 'Found', len(result), 'results in ', (t2 - t1) , 'ms'
 print 'The found occorences were'
-for item in result:
-    print item
+# for item in result:
+#     print item

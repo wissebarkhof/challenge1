@@ -1,0 +1,1 @@
+#redirect [[alcobaça]]  {{redirect category shell|1= {{r from title without diacritics}} }}
