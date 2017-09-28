@@ -1,8 +1,4 @@
-import re
-import ast
-import sys
-import time
-
+import re, ast, sys, time, os
 
 def buildRegex(query):
     elements = query.split()
@@ -19,23 +15,40 @@ def buildRegex(query):
 
 def findQuery(query, text):
     regex = buildRegex(query)
-    print 'Regex:', regex
     matchObj = re.findall(regex, text)
     if (matchObj):
         return matchObj
 
 _, text_file, query = sys.argv
 
-with open(text_file, 'r') as infile:
-    text = infile.read().replace('\n', '')
+
+try:
+    with open(text_file, 'r') as infile:
+        text = infile.read().replace('\n', '')
+except IOError:
+    text = ''
+    print 'Got a folder, merging', len(os.listdir(text_file)), 'files'
+    for filename in os.listdir(text_file):
+        with open(text_file + '/' + filename, 'r') as infile:
+            text += infile.read().replace('\n', '') + '\n'
+
 
 print "Looking for", query, "'in ", text_file
 
-t1 = time.clock()
-result = findQuery(query, text)
-t2 = time.clock()
+times = []
+for i in range(100):
+    t1 = time.clock()
+    result = findQuery(query, text)
+    t2 = time.clock()
+    times.append(t2 - t1)
 
-print 'Found', len(result), 'results in ', (t2 - t1) , 'ms'
-print 'The found occorences were'
-# for item in result:
-#     print item
+avg_time = sum(times) / len(times)
+print 'in an average of', avg_time  , 's in 100 loops'
+
+if result:
+    print 'Found', len(result), 'results'
+    print 'The found occorences were'
+    # for item in result:
+    #     print item
+else:
+    print 'No matches were found'
