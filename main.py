@@ -6,8 +6,8 @@ if __name__ == "__main__":
 
     start = time.clock()
     queryExecuter = query_text.QueryExecuter()
-    query ='"as" [2,4] "of"'
-    print queryExecuter.findQueryFromFileUsingIndex(query,"as","of",'abcdefghijklmnopqrstuvwxyz')
+    query ='"turkey" [1,10] "germany"'
+    print queryExecuter.findQueryFromFileUsingIndex(query,'abcdefghijklmnopqrstuvwxyz')
     print 'Running time :', time.clock() - start
 
 

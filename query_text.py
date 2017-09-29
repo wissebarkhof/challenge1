@@ -34,7 +34,11 @@ class QueryExecuter:
                 out.append(x)
         return out
 
-    def findQueryFromFileUsingIndex(self,query,word1,word2, startL):
+    def findQueryFromFileUsingIndex(self,query, startL):
+        L = query.split()
+        word1 =L[0].replace('"','')
+        word2 =L[2].replace('"','')
+
         allFSet = set()
         for s in startL:
             fileAddress = './indexed/indexFile_'+s+'.pickle'
