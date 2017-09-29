@@ -1,4 +1,5 @@
-import re, ast, sys, time, os
+import re, ast, sys, time, os,codecs
+import pickle
 
 class QueryExecuter:
     def __init__(self):
@@ -23,41 +24,25 @@ class QueryExecuter:
         if (matchObj):
             return matchObj
 
-    def findQueryFromFile(self, fname):
-        open()
+    def findQueryFromFile(self, query, fNames, pagesDir = './pages'):
+        out = []
+        for fN in fNames:
+            f = codecs.open(pagesDir+'/'+ fN)
+            text = f.read()
+            x = self.findQuery(query,text)
+            if x!=None:
+                out.append(x)
+        return out
 
+    def findQueryFromFileUsingIndex(self,query,word1,word2, startL):
+        allFSet = set()
+        for s in startL:
+            fileAddress = './indexed/indexFile_'+s+'.pickle'
+            d = pickle.load(open(fileAddress,'rb'))
+            fTable = d[0]
+            indexes = d[1]
+            fileIndexesToLook = indexes[word1].intersection(indexes[word2])
+            allFSet = allFSet.union(set([fTable[f] for f in fileIndexesToLook]))
 
-    #
-    # _, text_file, query = sys.argv
-    #
-    #
-    # try:
-    #     with open(text_file, 'r') as infile:
-    #         text = infile.read().replace('\n', '')
-    # except IOError:
-    #     text = ''
-    #     print 'Got a folder, merging', len(os.listdir(text_file)), 'files'
-    #     for filename in os.listdir(text_file):
-    #         with open(text_file + '/' + filename, 'r') as infile:
-    #             text += infile.read().replace('\n', '') + '\n'
-    #
-    #
-    # print "Looking for", query, "'in ", text_file
-    #
-    # times = []
-    # for i in range(100):
-    #     t1 = time.clock()
-    #     result = findQuery(query, text)
-    #     t2 = time.clock()
-    #     times.append(t2 - t1)
-    #
-    # avg_time = sum(times) / len(times)
-    # print 'in an average of', avg_time  , 's in 100 loops'
-    #
-    # if result:
-    #     print 'Found', len(result), 'results'
-    #     print 'The found occorences were'
-    #     # for item in result:
-    #     #     print item
-    # else:
-    #     print 'No matches were found'
+        return self.findQueryFromFile(query,allFSet)
+

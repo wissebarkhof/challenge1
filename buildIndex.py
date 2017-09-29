@@ -12,7 +12,7 @@ class WikiIndexer:
         else:
             self.file_names = file_names
 
-        self.index = defaultdict(list)
+        self.index = defaultdict(set)
         self.indexToFileName = {}
     def get_number_of_texts(self):
         return len(self.file_names)
@@ -25,18 +25,19 @@ class WikiIndexer:
         for fIndex in range(len(self.file_names)):
             fName = self.file_names[fIndex]
             self.indexToFileName[fIndex] = fName
+            self.indexToFileName[fName] = fIndex
             f = codecs.open(self.page_folder + '/' + fName, 'r')
             text = f.read()
             print 'building index for text {0} out of {1} \r'.format(fIndex, self.get_number_of_texts()),
             words = list(set([self.__clean_word(word) for word in text.split(' ')]))
             for word in words:
-                self.index[word].append(fIndex)
+                self.index[word].add(fIndex)
 
     def pickle_dump(self,name):
         if name == None:
             outfile_name = 'indexed/index_first_{0}_texts_pickle'.format(self.get_number_of_texts())
         else:
-            outfile_name = 'indexed/indexFile_{0}.pickle'.format(self.get_number_of_texts())
+            outfile_name = 'indexed/indexFile_{0}.pickle'.format(name)
         print 'pickle dumping index in ', outfile_name
         toSave = [self.indexToFileName,self.index]
         with open(outfile_name, 'wb') as outfile:
