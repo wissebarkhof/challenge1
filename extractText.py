@@ -2,50 +2,56 @@ import xml.etree.ElementTree as etree
 import re
 import codecs
 import urllib2
+class Extractor:
 
-bigFileAdress = '/home/ahmet/Downloads/enwiki-20170820-pages-articles.xml'
-def titleToFileName(title):
-    return './pages/' + re.sub(r'\W', '', title) + '.txt'
-
-def saveToFile(fileName,text):
-    f = codecs.open(fileName, 'w', "utf-8")
-    f.write(text)
-    f.close()
+    def __init__(self, fileAdress, pageRange = [0, float('inf')]):
+        self.limit = pageRange[1]
+        self.start = pageRange[0]
+        self.fileAdress = fileAdress
 
 
-def extractTextFromHugeXML(fileName):
-    index = 0
-    limit = 1000
+    def titleToFileName(self,title):
+        return './pages/' + re.sub(r'\W', '', title) + '.txt'
 
-    blockStart = '{http://www.mediawiki.org/xml/export-0.10/}'
-    for event, elem in etree.iterparse(fileName, events=('start', 'end')):
-        if 'page' in elem.tag and event == 'start':
-            textElem = elem.find(blockStart+'revision//'+blockStart+'text')
-            titleElem = elem.find(blockStart+'title')
-            if textElem!=None:
-                fileText = textElem.text
-                title = titleElem.text
-                if title != None and fileText!=None:
-                    saveToFile(titleToFileName(title),processText(fileText))
-                    index+=1
-                    if index>limit:
-                        break
+    def saveToFile(self, fileName,text):
+        f = codecs.open(fileName, 'w', "utf-8")
+        f.write(text)
+        f.close()
 
 
-            else:
-                continue
-            b = None
-            # for i in elem:
-            #     if 'revision' in i.tag:
+    def extractTextFromHugeXML(self):
+        index = 0
+        blockStart = '{http://www.mediawiki.org/xml/export-0.10/}'
+        for event, elem in etree.iterparse(self.fileAdress, events=('start', 'end')):
+
+            if 'page' in elem.tag and event == 'start':
+                if index%1000 == 0:
+                    print 'Now processing ', index
+                index += 1
+
+                if index > self.limit:
+                    break
+
+                if index < self.start:
+                    continue
+                textElem = elem.find(blockStart+'revision//'+blockStart+'text')
+                titleElem = elem.find(blockStart+'title')
+                if textElem!=None:
+                    fileText = textElem.text
+                    title = titleElem.text
+                    if title != None and fileText!=None:
+                        self.saveToFile(self.titleToFileName(title),self.processText(fileText))
+                else:
+                    continue
+    def processText(self,s):
+        s = s.lower()
+        s = s.replace('\n', ' ')
+        return s
 
 
-    # return processText(text)
 
-def processText(s):
-    s = s.lower()
-    s = s.replace('\n', ' ')
-
-    return  s
-
-
-extractTextFromHugeXML(bigFileAdress)
+if __name__ == "__main__":
+    bigFileAdress = '/home/ahmet/Downloads/enwiki-20170820-pages-articles.xml'
+    pageRangeToExtract = [10000,100000]
+    extractor = Extractor(bigFileAdress,pageRangeToExtract)
+    extractor.extractTextFromHugeXML()
