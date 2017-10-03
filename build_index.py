@@ -45,6 +45,7 @@ class WikiIndexer:
                 self.index[word].append(index)
 
     def pickle_dump(self):
+        # TODO: pickle dump doesn't work for default dict, need fix
         outfile_name = 'indexed/index_first_{0}_texts_pickle'.format(self.get_number_of_texts())
         print 'pickle dumping index in ', outfile_name
         with open(outfile_name, 'w') as outfile:
