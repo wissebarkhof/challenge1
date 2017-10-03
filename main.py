@@ -1,0 +1,22 @@
+import query_text
+import time
+import CONSTANTS
+
+if __name__ == "__main__":
+
+    start = time.clock()
+    queryExecuter = query_text.QueryExecuter()
+    query ='"netherland" [1,10] "amsterdam"'
+    # print queryExecuter.findQueryFromLettersGiven(query, CONSTANTS.capitals.lower())
+    for i in range(5):
+        print queryExecuter.findQueryFromLettersGiven(query, 'abcdefghkwnt')
+        # print queryExecuter.findQueryFromJsonFileUsingIndex(query)
+    print 'Running time :', (time.clock() - start)/5
+
+
+
+
+
+
+
+
