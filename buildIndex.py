@@ -2,6 +2,7 @@ import os
 from collections import defaultdict
 import pickle, re
 import codecs
+import json
 
 class WikiIndexer:
     def __init__(self, page_folder, file_names = None):
@@ -22,13 +23,15 @@ class WikiIndexer:
         return re.sub("[^A-Za-z0-9 ']", '', step1.lower())
 
     def build_index(self):
+        print 'in'
         for fIndex in range(len(self.file_names)):
+            if fIndex%1000 == 0:
+                print fIndex , '/' , len(self.file_names)
             fName = self.file_names[fIndex]
             self.indexToFileName[fIndex] = fName
             self.indexToFileName[fName] = fIndex
             f = codecs.open(self.page_folder + '/' + fName, 'r')
             text = f.read()
-            print 'building index for text {0} out of {1} \r'.format(fIndex, self.get_number_of_texts()),
             words = list(set([self.__clean_word(word) for word in text.split(' ')]))
             for word in words:
                 self.index[word].add(fIndex)
@@ -42,6 +45,20 @@ class WikiIndexer:
         toSave = [self.indexToFileName,self.index]
         with open(outfile_name, 'wb') as outfile:
                 pickle.dump(toSave,outfile)
+
+    def json_dump(self,name):
+        if name == None:
+            outfile_name = 'indexed/index_first_{0}_texts_pickle'.format(self.get_number_of_texts())
+        else:
+            outfile_name = 'indexed/indexFile_{0}'.format(name)
+        print 'JSON dumping index in ', outfile_name
+        # toSave = [self.indexToFileName, self.index]
+        for i in self.index:
+            self.index[i] = list(self.index[i])
+        with open(outfile_name+'.json', 'w') as fp:
+            json.dump(self.index, fp)
+        with open(outfile_name+'IndexToFileName.json', 'w') as fp:
+            json.dump(self.indexToFileName,fp)
 
     def find_text(self, word):
         indeces = self.index[word]

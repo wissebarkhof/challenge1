@@ -52,6 +52,6 @@ class Extractor:
 
 if __name__ == "__main__":
     bigFileAdress = '/home/ahmet/Downloads/enwiki-20170820-pages-articles.xml'
-    pageRangeToExtract = [10000,100000]
+    pageRangeToExtract = [100000,1000000]
     extractor = Extractor(bigFileAdress,pageRangeToExtract)
     extractor.extractTextFromHugeXML()

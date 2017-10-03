@@ -1,22 +1,31 @@
 import buildIndex
 import string
 import os
+import CONSTANTS
 
 class indexerMaster:
-    capitals = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
     def __init__(self,page_folder):
         self.page_folder = page_folder
 
-    def createAllIndexes(self):
-        for first in indexerMaster.capitals:
-            fNames = filter(lambda s: s.startswith(first), os.listdir(self.page_folder))
+    def createAllIndexesByStartingLetter(self):
+        for first in CONSTANTS.capitals:
+            fNames = filter(lambda s: s.startswith(first), os.listdir(self.page_folder)[:5000])
             indexer = buildIndex.WikiIndexer(self.page_folder, file_names=fNames)
             indexer.build_index()
             name = first
-            indexer.pickle_dump(name.lower())
+            indexer.json_dump(name.lower())
+
+    def creatAllIndexAsAWhole(self):
+        fNames = os.listdir(self.page_folder)[:50000]
+        indexer = buildIndex.WikiIndexer(self.page_folder,file_names=fNames)
+        indexer.build_index()
+        name = 'allIndexes'
+        indexer.json_dump(name)
 
 
 if __name__ == "__main__":
     master = indexerMaster('pages')
-    master.createAllIndexes()
-
+    print 'START'
+    master.createAllIndexesByStartingLetter()
+    # master.creatAllIndexAsAWhole()

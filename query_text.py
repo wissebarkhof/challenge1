@@ -1,9 +1,14 @@
 import re, ast, sys, time, os,codecs
 import pickle
-
+import json
+import CONSTANTS
 class QueryExecuter:
     def __init__(self):
-        pass
+        self.jsonLoaded = False
+        self.jsonFTable = None
+        self.jsonIndexes = None
+        self.d = {n.lower(): None for n in CONSTANTS.capitals}
+        self.d1 = {n.lower(): None for n in CONSTANTS.capitals}
 
     def buildRegex(self,query):
         elements = query.split()
@@ -26,6 +31,8 @@ class QueryExecuter:
 
     def findQueryFromFile(self, query, fNames, pagesDir = './pages'):
         out = []
+        print 'There are ', len(fNames), 'pages to running query'
+        print fNames
         for fN in fNames:
             f = codecs.open(pagesDir+'/'+ fN)
             text = f.read()
@@ -34,19 +41,47 @@ class QueryExecuter:
                 out.append(x)
         return out
 
-    def findQueryFromFileUsingIndex(self,query, startL):
-        L = query.split()
-        word1 =L[0].replace('"','')
-        word2 =L[2].replace('"','')
-
-        allFSet = set()
+    def findQueryFromLettersGiven(self, query, startL):
         for s in startL:
-            fileAddress = './indexed/indexFile_'+s+'.pickle'
-            d = pickle.load(open(fileAddress,'rb'))
-            fTable = d[0]
-            indexes = d[1]
-            fileIndexesToLook = indexes[word1].intersection(indexes[word2])
-            allFSet = allFSet.union(set([fTable[f] for f in fileIndexesToLook]))
+            if self.d[s] == None:
+                with open('./indexed/indexFile_' + s + '.json', 'r') as fp:
+                    k = json.load(fp)
+                for i in k:
+                    k[i] = set(k[i])
+                self.d[s] = k
+                k = None
+                with open('./indexed/indexFile_' + s + 'IndexToFileName.json', 'r') as fp:
+                    self.d1[s] = json.load(fp)
 
-        return self.findQueryFromFile(query,allFSet)
+        L = query.split()
+        word1 = L[0].replace('"', '')
+        word2 = L[2].replace('"', '')
+        allFSet = set()
+
+        for s in startL:
+            fTable = self.d1[s]
+            indexes = self.d[s]
+            fileIndexesToLook = indexes.get(word1,set()).intersection(indexes.get(word2,set()))
+            allFSet = allFSet.union(set([fTable[str(f)] for f in fileIndexesToLook]))
+
+        return self.findQueryFromFile(query, allFSet)
+
+    def findQueryFromJsonFileUsingIndex(self,query):
+        if self.jsonLoaded == False:
+            with open('./indexed/indexFile_allIndexes.json', 'r') as fp:
+                self.jsonIndexes = json.load(fp)
+            for i in self.jsonIndexes:
+                self.jsonIndexes[i] = set(self.jsonIndexes[i])
+            with open('./indexed/indexFile_allIndexesIndexToFileName.json', 'r') as fp:
+                self.jsonFTable = json.load(fp)
+
+        L = query.split()
+        word1 = L[0].replace('"', '')
+        word2 = L[2].replace('"', '')
+        fileIndexesToLook = self.jsonIndexes[word1].intersection(self.jsonIndexes[word2])
+        allFSet = set([self.jsonFTable[str(f)] for f in fileIndexesToLook])
+        out = self.findQueryFromFile(query,allFSet)
+        return out
+
+
 
