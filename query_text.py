@@ -2,6 +2,7 @@ import re, ast, sys, time, os,codecs
 import pickle
 import json
 import CONSTANTS
+
 class QueryExecuter:
     def __init__(self):
         self.jsonLoaded = False
@@ -82,6 +83,3 @@ class QueryExecuter:
         allFSet = set([self.jsonFTable[str(f)] for f in fileIndexesToLook])
         out = self.findQueryFromFile(query,allFSet)
         return out
-
-
-
