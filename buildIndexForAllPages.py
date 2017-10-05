@@ -10,14 +10,14 @@ class indexerMaster:
 
     def createAllIndexesByStartingLetter(self):
         for first in CONSTANTS.capitals:
-            fNames = filter(lambda s: s.startswith(first), os.listdir(self.page_folder)[:50000])
+            fNames = filter(lambda s: s.startswith(first), os.listdir(self.page_folder))
             indexer = buildIndex.WikiIndexer(self.page_folder, file_names=fNames)
             indexer.build_index()
             name = first
             indexer.json_dump(name.lower())
 
     def creatAllIndexAsAWhole(self):
-        fNames = os.listdir(self.page_folder)[:50000]
+        fNames = os.listdir(self.page_folder)
         indexer = buildIndex.WikiIndexer(self.page_folder,file_names=fNames)
         indexer.build_index()
         name = 'allIndexes'

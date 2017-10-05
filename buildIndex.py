@@ -3,6 +3,7 @@ from collections import defaultdict
 import pickle, re
 import codecs
 import json
+import nltk
 
 class WikiIndexer:
     def __init__(self, page_folder, file_names = None):
@@ -19,9 +20,9 @@ class WikiIndexer:
     def get_number_of_texts(self):
         return len(self.file_names)
 
-    def __clean_word(self, word):
-        step1 = re.sub('[/.,|\[]]', ' ', word.lower())
-        return re.sub("[^A-Za-z0-9 ']", '', step1.lower())
+    def __clean_text(self, text):
+        tokens = nltk.word_tokenize(text)
+        return tokens
 
     def build_index(self):
         print 'building index'
@@ -32,8 +33,8 @@ class WikiIndexer:
             self.indexToFileName[fIndex] = fName
             self.indexToFileName[fName] = fIndex
             f = codecs.open(self.page_folder + '/' + fName, 'r')
-            text = f.read()
-            words = list(set([self.__clean_word(word) for word in text.split(' ')]))
+            text = f.read().decode('utf-8')
+            words = self.__clean_text(text)
             for word in words:
                 self.index[word].add(fIndex)
 
@@ -61,7 +62,12 @@ if __name__ == "__main__":
     indexer = WikiIndexer('pages')
     indexer.build_index()
     print 'Found ', len(indexer.index.keys()), 'different words to index'
-    test_word = 'wales'
-    print 'Testing the indeces for the word "{0}"'.format(test_word)
-    texts = indexer.find_text(test_word)
-    indexer.pickle_dump('ac')
+    test_words = [
+        'python',
+        'wikipedia',
+        'links',
+        '[[',
+        ]
+    for word in test_words:
+        print 'Testing the indeces for the word "{0}"'.format(word)
+        texts = indexer.find_text(word)
