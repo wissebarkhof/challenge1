@@ -2,6 +2,9 @@ import xml.etree.ElementTree as etree
 import re
 import codecs
 import urllib2
+
+
+
 class Extractor:
 
     def __init__(self, fileAdress, pageRange = [0, float('inf')]):

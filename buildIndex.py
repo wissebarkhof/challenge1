@@ -24,10 +24,10 @@ class WikiIndexer:
         return re.sub("[^A-Za-z0-9 ']", '', step1.lower())
 
     def build_index(self):
-        # print 'building index'
+        print 'building index'
         for fIndex in range(len(self.file_names)):
             if fIndex % 1000 == 0:
-                print '{0}/{1} \r'.format(fIndex, len(self.file_names)),
+                print fIndex , '/' , len(self.file_names)
             fName = self.file_names[fIndex]
             self.indexToFileName[fIndex] = fName
             self.indexToFileName[fName] = fIndex
@@ -37,14 +37,14 @@ class WikiIndexer:
             for word in words:
                 self.index[word].add(fIndex)
 
-    def json_dump(self, name):
+    def json_dump(self,name):
         if name:
             outfile_name = 'indexed/indexFile_{0}'.format(name)
         else:
             outfile_name = 'indexed/index_first_{0}_texts_pickle'.format(self.get_number_of_texts())
 
-        # print 'JSON dumping index in ', outfile_name
-
+        print 'JSON dumping index in ', outfile_name
+        # toSave = [self.indexToFileName, self.index]
         for i in self.index:
             self.index[i] = list(self.index[i])
         with open(outfile_name+'.json', 'w') as fp:
