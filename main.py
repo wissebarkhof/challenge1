@@ -5,6 +5,7 @@ import os, re
 
 if __name__ == "__main__":
     queryExecuter = query_text.QueryExecuter()
+    search_letters = CONSTANTS.capitals.lower()
     path_to_validation_queries = 'validation_queries'
     test_data = {
             'own_test': {
@@ -23,9 +24,10 @@ if __name__ == "__main__":
             'output': output
         }
     print 'Searching', len(os.listdir('pages')), 'files....'
+    queryExecuter.loadIndexesFromLetters(search_letters)
     for file_name in test_data:
         start = time.clock()
-        result = queryExecuter.findQueryFromLettersGiven(test_data[file_name]['query'], CONSTANTS.capitals.lower())
+        result = queryExecuter.findQueryFromLettersGiven(test_data[file_name]['query'], search_letters)
         end = time.clock()
         if result:
             print 'we found', len(result), 'results:'

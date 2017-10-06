@@ -50,21 +50,25 @@ class QueryExecuter:
         return out
 
     def getFromIndex(self, string, letter):
-        # do a partial lookup on the keys in the index
-        # keys = [k for k,v in self.d[letter].items() if string in k]
+        # do a partial lookup on the keys in the index ->>> too slow
+
+        # keys = [k for k,v in self.d[letter].items() if k.startswith(string)]
         # indexes = set()
         # for key in keys:
-        #     indexes.union(self.d[letter][key])
-        indexes = self.d[letter]
-        result = indexes.get(string, set())
-        return result
+        #     indexes = indexes.union(self.d[letter][key])
+        # # print len(keys), ' keys found for"', string, '" on "', letter, '"'
+        # print 'PARTIAL LOOKUP', len(indexes), ' indexes found for"', string, '" on "', letter, '"'
+        #
+        # indexes = self.d[letter]
+        # result = indexes.get(string, set())
+        # print 'FULL LOOKUP', len(result), ' indexes found for"', string, '" on "', letter, '"'
 
-    def findQueryFromLettersGiven(self, query, startL):
-        print 'Looking for', query, '...'
-        allFSet = set()
-        self.parseQuery(query)
+        return self.d[letter].get(string, set())
+
+    def loadIndexesFromLetters(self, startL):
+        print 'loading all needed indexes for', startL
         for s in startL:
-            print 'scanning pages starting with', s
+            print 'loading indeces for pages starting with', s
             if self.d[s] == None:
                 with open('./indexed/indexFile_' + s + '.json', 'r') as fp:
                     k = json.load(fp)
@@ -74,6 +78,13 @@ class QueryExecuter:
                 k = None
                 with open('./indexed/indexFile_' + s + 'IndexToFileName.json', 'r') as fp:
                     self.d1[s] = json.load(fp)
+
+
+    def findQueryFromLettersGiven(self, query, startL):
+        print 'Looking for', query, '...'
+        allFSet = set()
+        self.parseQuery(query)
+        for s in startL:
             fTable = self.d1[s]
             indexes = self.d[s]
             fileIndexesToLook = set.intersection(*[self.getFromIndex(string, s) for string in self.strings])
