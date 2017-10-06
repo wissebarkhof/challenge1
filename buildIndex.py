@@ -25,10 +25,8 @@ class WikiIndexer:
         return tokens
 
     def build_index(self):
-        print 'building index'
         for fIndex in range(len(self.file_names)):
-            if fIndex % 1000 == 0:
-                print fIndex , '/' , len(self.file_names)
+            print '{0}/{1} \r'.format(fIndex, len(self.file_names)),
             fName = self.file_names[fIndex]
             self.indexToFileName[fIndex] = fName
             self.indexToFileName[fName] = fIndex

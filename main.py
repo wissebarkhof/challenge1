@@ -26,8 +26,19 @@ if __name__ == "__main__":
     for file_name in test_data:
         start = time.clock()
         result = queryExecuter.findQueryFromLettersGiven(test_data[file_name]['query'], CONSTANTS.capitals.lower())
+        end = time.clock()
         if result:
             print 'we found', len(result), 'results:'
             for string in result:
                 print '  --  result:', string
-        print 'Running time :', (time.clock() - start), '\n----------------------------------------------------------------\n'
+        else:
+            print '++++++++++++  we found 0 results for the query ++++++++++++++'
+        print 'Running time :', (end - start), '\n----------------------------------------------------------------\n'
+        test_data[file_name]['results'] = {
+            'time': end - start,
+            'results': result
+        }
+    print '\nSUMMARY'
+    for file_name in test_data:
+        data = test_data[file_name]
+        print data['query'], '\t', len(data['results']['results']), 'results\t', data['results']['time'], 'seconds'

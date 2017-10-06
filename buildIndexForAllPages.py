@@ -10,6 +10,7 @@ class indexerMaster:
 
     def createAllIndexesByStartingLetter(self):
         for first in CONSTANTS.capitals:
+            print 'Creating index for "', first, '"'
             fNames = filter(lambda s: s.startswith(first), os.listdir(self.page_folder))
             indexer = buildIndex.WikiIndexer(self.page_folder, file_names=fNames)
             indexer.build_index()
