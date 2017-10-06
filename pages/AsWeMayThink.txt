@@ -1,1 +1,0 @@
-#redirect [[as_we_may_think]]  {{redirect category shell|1=  {{r from camelcase}} }}

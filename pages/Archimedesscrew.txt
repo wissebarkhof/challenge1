@@ -1,1 +1,0 @@
-#redirect [[archimedes' screw]]  {{rcat shell| {{r move}} {{r nick}} {{r unprintworthy}} *''this is not a misspelling'', because it is descriptive rather than possessive, as a "[[socrates programme]]" or a "[[buddha and the chocolate box|cat stevens album]]". }}

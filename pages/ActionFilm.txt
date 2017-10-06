@@ -1,1 +1,0 @@
-#redirect [[action film]]  {{redirect category shell|1= {{r from other capitalisation}} }}

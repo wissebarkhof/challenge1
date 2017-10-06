@@ -1,1 +1,0 @@
-#redirect [[the diary of a young girl]]  {{redirect category shell|1= {{r from alternative name}} }}

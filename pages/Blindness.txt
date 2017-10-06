@@ -1,1 +1,0 @@
-#redirect[[visual impairment]]  {{redirect category shell|1= {{r from merge}} }}  [[category:blindness| ]] [[category:visual disturbances and blindness]] {{bots|deny=kasparbot}}

@@ -1,1 +1,0 @@
-#redirect [[ashmore and cartier islands#government]]  {{redirect category shell| {{r from subpage}} {{r to section}} }}

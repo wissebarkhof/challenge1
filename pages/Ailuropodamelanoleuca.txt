@@ -1,1 +1,0 @@
-#redirect [[giant panda]]  {{redirect category shell|1= {{r from scientific name}} }}  [[category:taxa named by armand david]]

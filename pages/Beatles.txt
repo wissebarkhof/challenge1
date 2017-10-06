@@ -1,1 +1,0 @@
-#redirect [[the beatles]] [[category:protected redirects]] {{r from incomplete name}}

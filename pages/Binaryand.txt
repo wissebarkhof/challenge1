@@ -1,1 +1,0 @@
-#redirect [[bitwise operation#and]]  {{redirect category shell|1= {{r from merge}} {{r to section}} }}

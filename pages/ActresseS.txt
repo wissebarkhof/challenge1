@@ -1,1 +1,0 @@
-#redirect [[lists of actors]]  {{redirect category shell| {{r from camelcase}} {{r from move}} {{r unprintworthy}} }}

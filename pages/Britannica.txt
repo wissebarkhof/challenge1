@@ -1,1 +1,0 @@
-#redirect [[encyclopædia britannica]]  {{redirect category shell| {{r from short name}} {{r printworthy}} }}

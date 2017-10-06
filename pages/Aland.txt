@@ -1,1 +1,0 @@
-#redirect [[åland islands]]  {{rcat shell| {{r move}} {{r short}} {{r to diacritics}} {{r hatnote}} {{r up}} }}

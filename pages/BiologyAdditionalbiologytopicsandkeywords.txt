@@ -1,1 +1,0 @@
-#redirect [[outline of biology]]  {{redirect category shell|1= {{r from subpage}} }}

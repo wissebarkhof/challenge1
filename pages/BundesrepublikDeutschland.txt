@@ -1,1 +1,0 @@
-#redirect [[germany]]  {{redirect category shell| {{r from alternative language|1=de|2=en}} {{r from long name}} }}

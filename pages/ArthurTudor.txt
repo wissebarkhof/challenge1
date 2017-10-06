@@ -1,1 +1,0 @@
-#redirect [[arthur, prince of wales]]  {{redirect category shell|1= {{r from alternative name}} }}

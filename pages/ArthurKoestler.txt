@@ -1,1 +1,0 @@
-#redirect [[arthur koestler]]  {{redirect category shell|1= {{r from camelcase}} }}

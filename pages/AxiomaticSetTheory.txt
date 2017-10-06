@@ -1,1 +1,0 @@
-#redirect [[set theory#axiomatic set theory]]  {{redirect category shell|1= {{r from other capitalisation}} }}

@@ -1,1 +1,0 @@
-#redirect [[history of astronomy]]  {{redirect category shell|1= {{r from subpage}} }}

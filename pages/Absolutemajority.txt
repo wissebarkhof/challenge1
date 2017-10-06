@@ -1,1 +1,0 @@
-#redirect [[supermajority#majority of the entire membership]]  {{rcat shell| {{r merge}} {{r nick}} {{r sect}} {{r p}} }}

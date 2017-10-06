@@ -1,1 +1,0 @@
-#redirect [[ælfric]]  {{rcat shell| {{r to ligature}} }}

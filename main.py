@@ -22,12 +22,12 @@ if __name__ == "__main__":
             'query' : processed,
             'output': output
         }
-    # print queryExecuter.findQueryFromLettersGiven(query, CONSTANTS.capitals.lower())
+    print 'Searching', len(os.listdir('pages')), 'files....'
     for file_name in test_data:
         start = time.clock()
         result = queryExecuter.findQueryFromLettersGiven(test_data[file_name]['query'], CONSTANTS.capitals.lower())
         if result:
-            print '------------- we found', len(result), 'results -------------------'
+            print 'we found', len(result), 'results:'
             for string in result:
-                print 'result:', string
-        print 'Running time :', (time.clock() - start), '\n\n'
+                print '  --  result:', string
+        print 'Running time :', (time.clock() - start), '\n----------------------------------------------------------------\n'

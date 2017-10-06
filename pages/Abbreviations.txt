@@ -1,1 +1,0 @@
-#redirect [[abbreviation]]  {{redirect category shell|1= {{r from plural}} }}

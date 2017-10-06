@@ -1,1 +1,0 @@
-#redirect [[authoritarianism]]  {{redirect category shell| {{r from move}} {{r from misspelling}} }}

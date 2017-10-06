@@ -1,1 +1,0 @@
-#redirect [[constructed language]]  {{rcat shell| {{r from move}} {{r from misspelling|<small>''(see also)''</small> [[artificial language]]s}} {{r from camelcase}} {{unprintworthy redirect}} }}

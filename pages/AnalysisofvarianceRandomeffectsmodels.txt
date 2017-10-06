@@ -1,1 +1,0 @@
-#redirect [[analysis of variance]]  {{redirect category shell|1= {{r from subpage}} }}

@@ -1,1 +1,0 @@
-#redirect [[buddhism]]  {{rcat shell| {{r from incorrect capitalisation}} {{r from camelcase}} }}

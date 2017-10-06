@@ -1,1 +1,0 @@
-#redirect [[academy award for best picture]]  {{redirect category shell| {{r from camelcase}} {{r from subpage}} }}

@@ -1,1 +1,0 @@
-#redirect [[alfred kinsey]]  {{redirect category shell| {{r from long name}} {{r unprintworthy}} }}

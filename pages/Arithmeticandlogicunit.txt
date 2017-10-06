@@ -1,1 +1,0 @@
-#redirect [[arithmetic logic unit]]

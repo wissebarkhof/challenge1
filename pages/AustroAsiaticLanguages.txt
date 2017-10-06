@@ -1,1 +1,0 @@
-#redirect [[austroasiatic languages]]  {{redirect category shell|1= {{r from camelcase}} }}

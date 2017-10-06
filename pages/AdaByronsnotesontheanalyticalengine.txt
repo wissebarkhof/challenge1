@@ -1,1 +1,0 @@
-#redirect [[ada lovelace#work]]  <!-- merged to [[ada lovelace]] -->

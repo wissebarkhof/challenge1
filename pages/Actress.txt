@@ -1,1 +1,0 @@
-#redirect [[actor]]  {{rcat shell| {{wikidata redirect|15643881}} {{r from gender}} {{r from move}} {{r hatnote}} {{r printworthy}} }}

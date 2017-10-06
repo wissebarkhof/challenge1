@@ -1,1 +1,0 @@
-#redirect [[an enquiry concerning human understanding]]  {{redirect category shell|1= {{r from camelcase}} }}

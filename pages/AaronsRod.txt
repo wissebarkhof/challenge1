@@ -1,1 +1,0 @@
-#redirect [[aaron's rod]]  {{rcat shell| {{r move}} {{r caps}} {{r from misspelling}} }}

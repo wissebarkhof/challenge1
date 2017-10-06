@@ -1,1 +1,0 @@
-#redirect [[asymmetric digital subscriber line]]  {{redirect category shell|1= {{r for convenience}} }}

@@ -1,1 +1,0 @@
-#redirect [[books of the bible]]  {{redirect category shell|1= {{r from camelcase}} }}

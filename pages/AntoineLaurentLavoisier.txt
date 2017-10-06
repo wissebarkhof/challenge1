@@ -1,1 +1,0 @@
-#redirect [[antoine lavoisier]]  {{redirect category shell|1= {{r from full name}} }}

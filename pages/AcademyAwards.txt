@@ -1,1 +1,0 @@
-#redirect [[academy awards]]  {{redirect category shell|1= {{r from camelcase}} }}

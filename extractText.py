@@ -1,7 +1,5 @@
 import xml.etree.ElementTree as etree
-import re
-import codecs
-import urllib2
+import re, codecs, urllib2, sys
 
 
 
@@ -21,15 +19,14 @@ class Extractor:
         f.write(text)
         f.close()
 
-
     def extractTextFromHugeXML(self):
         index = 0
         blockStart = '{http://www.mediawiki.org/xml/export-0.10/}'
         for event, elem in etree.iterparse(self.fileAdress, events=('start', 'end')):
 
             if 'page' in elem.tag and event == 'start':
-                if index%1000 == 0:
-                    print 'Now processing ', index
+                # if index % 1000 == 0:
+                print 'Now processing {0} \r'.format(index),
                 index += 1
 
                 if index > self.limit:
@@ -54,7 +51,10 @@ class Extractor:
 
 
 if __name__ == "__main__":
-    bigFileAdress = '/home/ahmet/Downloads/enwiki-20170820-pages-articles.xml'
-    pageRangeToExtract = [100000,1000000]
+    page_from = 100000
+    page_to = 1000000
+    print 'Fetching pages from', page_from, 'to', page_to
+    bigFileAdress = str(sys.argv[1])
+    pageRangeToExtract = [page_from, page_to]
     extractor = Extractor(bigFileAdress,pageRangeToExtract)
     extractor.extractTextFromHugeXML()

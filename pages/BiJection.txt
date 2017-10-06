@@ -1,1 +1,0 @@
-#redirect [[bijection, injection and surjection]]  {{redirect category shell|1= {{r from camelcase}} }}

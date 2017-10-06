@@ -1,1 +1,0 @@
-#redirect [[politics of afghanistan]]  {{redirect category shell|1= {{r from subpage}} }}

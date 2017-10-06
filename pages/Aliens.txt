@@ -1,1 +1,0 @@
-#redirect [[alien]]  {{redirect category shell|1= {{r from ambiguous page}} {{r from plural}} }}

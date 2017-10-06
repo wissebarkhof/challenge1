@@ -1,1 +1,0 @@
-#redirect [[bryce canyon national park]]  {{redirect category shell|1= {{r from merge}} }}

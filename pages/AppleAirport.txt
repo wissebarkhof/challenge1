@@ -1,1 +1,0 @@
-#redirect [[airport]]  {{redirect category shell|1= {{r from alternative name}} {{r from other capitalisation}} }}

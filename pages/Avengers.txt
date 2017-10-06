@@ -1,1 +1,0 @@
-#redirect [[the avengers]]  {{redirect category shell|1= {{r from ambiguous page}} {{r from short name}} }}

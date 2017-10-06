@@ -1,1 +1,0 @@
-#redirect [[slaughterhouse]]  {{rcat shell| {{r move}} {{r from alternative language|fr|en}} {{r from alternative name}} }}

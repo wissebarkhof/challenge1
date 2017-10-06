@@ -1,1 +1,0 @@
-#redirect [[cain and abel]]  {{wikidata redirect}}
