@@ -8,8 +8,8 @@ class QueryExecuter:
         self.jsonLoaded = False
         self.jsonFTable = None
         self.jsonIndexes = None
-        self.d = {n.lower(): None for n in CONSTANTS.capitals}
-        self.d1 = {n.lower(): None for n in CONSTANTS.capitals}
+        self.d = {n: None for n in CONSTANTS.letters}
+        self.d1 = {n: None for n in CONSTANTS.letters}
         self.strings = []
         self.wild_cards = []
 
@@ -42,7 +42,8 @@ class QueryExecuter:
         for name in fNames:
             print ' - running the query on', name
         for fN in fNames:
-            f = codecs.open(pagesDir+'/'+ fN)
+            fileDir = pagesDir+'/'+fN[0].lower()+'/'+ fN
+            f = codecs.open(fileDir)
             text = f.read()
             x = self.findQuery(query,text)
             if x:

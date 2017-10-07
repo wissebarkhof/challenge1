@@ -9,13 +9,15 @@ class indexerMaster:
         self.page_folder = page_folder
 
     def createAllIndexesByStartingLetter(self):
-        for first in CONSTANTS.capitals:
+        for first in CONSTANTS.letters:
             print 'Creating index for "', first, '"'
-            fNames = filter(lambda s: s.startswith(first), os.listdir(self.page_folder))
-            indexer = buildIndex.WikiIndexer(self.page_folder, 'indexed_all', file_names=fNames)
-            indexer.build_index()
-            name = first
-            indexer.json_dump(name.lower())
+            subPageFolder = self.page_folder+"/"+first+"/"
+            fNames = os.listdir(subPageFolder)
+            if fNames:
+                indexer = buildIndex.WikiIndexer(subPageFolder, file_names=fNames)
+                indexer.build_index()
+                name = first
+                indexer.json_dump(name.lower())
 
     def creatAllIndexAsAWhole(self):
         fNames = os.listdir(self.page_folder)
