@@ -40,17 +40,18 @@ class Extractor:
                 if index < self.start:
                     elem.clear()
                     continue
+                if elem.find(blockStart + 'redirect') != None:
+                    elem.clear()
+                    continue
+
                 textElem = elem.find(blockStart+'revision//'+blockStart+'text')
                 titleElem = elem.find(blockStart+'title')
                 if textElem!=None:
                     fileText = textElem.text
                     title = titleElem.text
                     if title != None and fileText!=None and title !='':
-                        try:
-                            self.saveToFile(utils.titleToFileAdress(title, self.pagesFolder), self.processText(fileText))
-                        except UnicodeEncodeError:
-                            print 'found a unicode error but who cares reall, i know i dont, catchyalatah '
-                            continue
+                        id = elem.find(blockStart+'id').text
+                        self.saveToFile(utils.titleToFileAdressByID(title, id, self.pagesFolder),self.processText(fileText))
                 else:
                     continue
             elem.clear()

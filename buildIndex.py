@@ -15,9 +15,7 @@ class WikiIndexer:
         else:
             raise Exception('No file to index given')
             self.file_names = os.listdir(page_folder)
-
         self.index = defaultdict(set)
-        self.indexToFileName = {}
 
     def get_number_of_texts(self):
         return len(self.file_names)
@@ -30,16 +28,12 @@ class WikiIndexer:
         for fIndex in range(len(self.file_names)):
             print '{0}/{1} \r'.format(fIndex, len(self.file_names)),
             fName = self.file_names[fIndex]
-            self.indexToFileName[fIndex] = fName
-            self.indexToFileName[fName] = fIndex
-
+            indexToSave = fName[:-4]#Only part without txt
             f = codecs.open(self.page_folder+fName, 'r')
             text = f.read().decode('utf-8')
             words = self.__clean_text(text)
             for word in words:
-                self.index[word].add(fIndex)
-
-
+                self.index[word].add(indexToSave)
 
     def json_dump(self,name):
         if name:
@@ -47,19 +41,18 @@ class WikiIndexer:
         else:
             outfile_name = '{0}/index_first_{1}_texts_pickle'.format(self.output_name, self.get_number_of_texts())
 
+            raise Exception('A problem with file name')
         print 'JSON dumping index in ', outfile_name
 
         for i in self.index:
             self.index[i] = list(self.index[i])
-        with open(outfile_name+'.json', 'w') as fp:
+
+        with open(outfile_name + '.json', 'w') as fp:
             json.dump(self.index, fp)
-        with open(outfile_name+'IndexToFileName.json', 'w') as fp:
-            json.dump(self.indexToFileName,fp)
 
     def find_text(self, word):
         indeces = self.index[word]
         print 'Found', len(indeces), 'number of texts'
-    #     return [self.texts[i] for i in indeces]
 
 if __name__ == "__main__":
     indexer = WikiIndexer('indexed_all', 'pages')
