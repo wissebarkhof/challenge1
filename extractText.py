@@ -38,6 +38,10 @@ class Extractor:
                 if index < self.start:
                     elem.clear()
                     continue
+                if elem.find(blockStart + 'redirect') == None:
+                    elem.clear()
+                    continue
+
                 textElem = elem.find(blockStart+'revision//'+blockStart+'text')
                 titleElem = elem.find(blockStart+'title')
                 if textElem!=None:
@@ -57,7 +61,7 @@ class Extractor:
 
 if __name__ == "__main__":
     page_from = 0
-    page_to = 100000
+    page_to = 5000000
     print 'Fetching pages from', page_from, 'to', page_to
     bigFileAdress = str(sys.argv[1])
     pageRangeToExtract = [page_from, page_to]
