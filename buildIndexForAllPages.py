@@ -12,7 +12,7 @@ class indexerMaster:
         for first in CONSTANTS.capitals:
             print 'Creating index for "', first, '"'
             fNames = filter(lambda s: s.startswith(first), os.listdir(self.page_folder))
-            indexer = buildIndex.WikiIndexer(self.page_folder, file_names=fNames)
+            indexer = buildIndex.WikiIndexer(self.page_folder, 'indexed_all', file_names=fNames)
             indexer.build_index()
             name = first
             indexer.json_dump(name.lower())
@@ -26,7 +26,7 @@ class indexerMaster:
 
 
 if __name__ == "__main__":
-    master = indexerMaster('pages')
+    master = indexerMaster('pages_all')
     print 'START'
     master.createAllIndexesByStartingLetter()
     # master.creatAllIndexAsAWhole()

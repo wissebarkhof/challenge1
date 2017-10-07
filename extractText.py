@@ -5,14 +5,15 @@ import re, codecs, urllib2, sys
 
 class Extractor:
 
-    def __init__(self, fileAdress, pageRange = [0, float('inf')]):
-        self.limit = pageRange[1]
-        self.start = pageRange[0]
+    def __init__(self, fileAdress):
+        self.limit = float('inf')
+        self.start = 0
+
         self.fileAdress = fileAdress
 
 
     def titleToFileName(self,title):
-        return './pages/' + re.sub(r'\W', '', title) + '.txt'
+        return './pages_all/' + re.sub(r'\W', '', title) + '.txt'
 
     def saveToFile(self, fileName,text):
         f = codecs.open(fileName, 'w', "utf-8")
@@ -23,7 +24,6 @@ class Extractor:
         index = 0
         blockStart = '{http://www.mediawiki.org/xml/export-0.10/}'
         for event, elem in etree.iterparse(self.fileAdress, events=('start', 'end')):
-
             if 'page' in elem.tag and event == 'start':
                 # if index % 1000 == 0:
                 print 'Now processing {0} \r'.format(index),
@@ -51,10 +51,6 @@ class Extractor:
 
 
 if __name__ == "__main__":
-    page_from = 100000
-    page_to = 1000000
-    print 'Fetching pages from', page_from, 'to', page_to
     bigFileAdress = str(sys.argv[1])
-    pageRangeToExtract = [page_from, page_to]
-    extractor = Extractor(bigFileAdress,pageRangeToExtract)
+    extractor = Extractor(bigFileAdress)
     extractor.extractTextFromHugeXML()
