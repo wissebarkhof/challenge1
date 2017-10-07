@@ -39,8 +39,6 @@ class WikiIndexer:
             for word in words:
                 self.index[word].add(fIndex)
 
-
-
     def json_dump(self,name):
         if name:
             outfile_name = 'indexed/indexFile_{0}'.format(name)
@@ -51,10 +49,14 @@ class WikiIndexer:
 
         for i in self.index:
             self.index[i] = list(self.index[i])
-        with open(outfile_name+'.json', 'w') as fp:
-            json.dump(self.index, fp)
-        with open(outfile_name+'IndexToFileName.json', 'w') as fp:
-            json.dump(self.indexToFileName,fp)
+
+        toSave = [self.index,self.indexToFileName]
+        with open(outfile_name + '.json', 'w') as fp:
+            json.dump(toSave, fp)
+        # with open(outfile_name+'.json', 'w') as fp:
+        #     json.dump(self.index, fp)
+        # with open(outfile_name+'IndexToFileName.json', 'w') as fp:
+        #     json.dump(self.indexToFileName,fp)
 
     def find_text(self, word):
         indeces = self.index[word]

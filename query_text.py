@@ -42,7 +42,7 @@ class QueryExecuter:
         for name in fNames:
             print ' - running the query on', name
         for fN in fNames:
-            fileDir = pagesDir+'/'+fN[0].lower()+'/'+ fN
+            fileDir = pagesDir+'/'+ fN
             f = codecs.open(fileDir)
             text = f.read()
             x = self.findQuery(query,text)
@@ -73,12 +73,11 @@ class QueryExecuter:
             if self.d[s] == None:
                 with open('./indexed/indexFile_' + s + '.json', 'r') as fp:
                     k = json.load(fp)
-                for i in k:
-                    k[i] = set(k[i])
-                self.d[s] = k
+                for i in k[0]:
+                    k[0][i] = set(k[0][i])
+                self.d[s] = k[0]
+                self.d1[s] = k[1]
                 k = None
-                with open('./indexed/indexFile_' + s + 'IndexToFileName.json', 'r') as fp:
-                    self.d1[s] = json.load(fp)
 
 
     def findQueryFromLettersGiven(self, query, startL):
@@ -90,22 +89,6 @@ class QueryExecuter:
             indexes = self.d[s]
             fileIndexesToLook = set.intersection(*[self.getFromIndex(string, s) for string in self.strings])
             # TODO:  we could merge these lookups if the fileIndex = fileName
-            allFSet = allFSet.union(set([fTable[str(f)] for f in fileIndexesToLook]))
+            allFSet = allFSet.union(set([s + '/'+ fTable[str(f)] for f in fileIndexesToLook]))
         return self.findQueryFromFile(query, allFSet)
 
-    def findQueryFromJsonFileUsingIndex(self,query):
-        if self.jsonLoaded == False:
-            with open('./indexed/indexFile_allIndexes.json', 'r') as fp:
-                self.jsonIndexes = json.load(fp)
-            for i in self.jsonIndexes:
-                self.jsonIndexes[i] = set(self.jsonIndexes[i])
-            with open('./indexed/indexFile_allIndexesIndexToFileName.json', 'r') as fp:
-                self.jsonFTable = json.load(fp)
-
-        L = query.split()
-        word1 = L[0].replace('"', '')
-        word2 = L[2].replace('"', '')
-        fileIndexesToLook = self.jsonIndexes[word1].intersection(self.jsonIndexes[word2])
-        allFSet = set([self.jsonFTable[str(f)] for f in fileIndexesToLook])
-        out = self.findQueryFromFile(query,allFSet)
-        return out
