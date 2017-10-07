@@ -4,14 +4,16 @@ import pickle, re
 import codecs
 import json
 import nltk
+import utils
 
 class WikiIndexer:
     def __init__(self, page_folder, file_names = None):
         self.page_folder = page_folder
 
-        if file_names:
+        if file_names != None:
             self.file_names = file_names
         else:
+            raise Exception('No file to index given')
             self.file_names = os.listdir(page_folder)
 
         self.index = defaultdict(set)
@@ -30,11 +32,14 @@ class WikiIndexer:
             fName = self.file_names[fIndex]
             self.indexToFileName[fIndex] = fName
             self.indexToFileName[fName] = fIndex
-            f = codecs.open(self.page_folder + '/' + fName, 'r')
+
+            f = codecs.open(self.page_folder+fName, 'r')
             text = f.read().decode('utf-8')
             words = self.__clean_text(text)
             for word in words:
                 self.index[word].add(fIndex)
+
+
 
     def json_dump(self,name):
         if name:
@@ -43,7 +48,7 @@ class WikiIndexer:
             outfile_name = 'indexed/index_first_{0}_texts_pickle'.format(self.get_number_of_texts())
 
         print 'JSON dumping index in ', outfile_name
-        # toSave = [self.indexToFileName, self.index]
+
         for i in self.index:
             self.index[i] = list(self.index[i])
         with open(outfile_name+'.json', 'w') as fp:

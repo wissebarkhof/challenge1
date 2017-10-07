@@ -5,7 +5,7 @@ import os, re
 
 if __name__ == "__main__":
     queryExecuter = query_text.QueryExecuter()
-    search_letters = CONSTANTS.capitals.lower()
+    search_letters = CONSTANTS.letters
     path_to_validation_queries = 'validation_queries'
     test_data = {
             'own_test': {
