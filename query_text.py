@@ -9,7 +9,6 @@ class QueryExecuter:
         self.jsonFTable = None
         self.jsonIndexes = None
         self.d = {n: None for n in CONSTANTS.letters}
-        self.d1 = {n: None for n in CONSTANTS.letters}
         self.strings = []
         self.wild_cards = []
 
@@ -51,19 +50,6 @@ class QueryExecuter:
         return out
 
     def getFromIndex(self, string, letter):
-        # do a partial lookup on the keys in the index ->>> too slow
-
-        # keys = [k for k,v in self.d[letter].items() if k.startswith(string)]
-        # indexes = set()
-        # for key in keys:
-        #     indexes = indexes.union(self.d[letter][key])
-        # # print len(keys), ' keys found for"', string, '" on "', letter, '"'
-        # print 'PARTIAL LOOKUP', len(indexes), ' indexes found for"', string, '" on "', letter, '"'
-        #
-        # indexes = self.d[letter]
-        # result = indexes.get(string, set())
-        # print 'FULL LOOKUP', len(result), ' indexes found for"', string, '" on "', letter, '"'
-
         return self.d[letter].get(string, set())
 
     def loadIndexesFromLetters(self, startL):
@@ -73,10 +59,9 @@ class QueryExecuter:
             if self.d[s] == None:
                 with open('./indexed/indexFile_' + s + '.json', 'r') as fp:
                     k = json.load(fp)
-                for i in k[0]:
-                    k[0][i] = set(k[0][i])
-                self.d[s] = k[0]
-                self.d1[s] = k[1]
+                for i in k:
+                    k[i] = set(k[i])
+                self.d[s] = k
                 k = None
 
 
@@ -85,10 +70,7 @@ class QueryExecuter:
         allFSet = set()
         self.parseQuery(query)
         for s in startL:
-            fTable = self.d1[s]
-            indexes = self.d[s]
             fileIndexesToLook = set.intersection(*[self.getFromIndex(string, s) for string in self.strings])
-            # TODO:  we could merge these lookups if the fileIndex = fileName
-            allFSet = allFSet.union(set([s + '/'+ fTable[str(f)] for f in fileIndexesToLook]))
+            allFSet = allFSet.union(set([s + '/' + str(f)+'.txt' for f in fileIndexesToLook]))
         return self.findQueryFromFile(query, allFSet)
 

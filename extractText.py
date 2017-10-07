@@ -48,7 +48,8 @@ class Extractor:
                     fileText = textElem.text
                     title = titleElem.text
                     if title != None and fileText!=None and title !='':
-                        self.saveToFile(utils.titleToFileAdress(title, self.pagesFolder), self.processText(fileText))
+                        id = elem.find(blockStart+'id').text
+                        self.saveToFile(utils.titleToFileAdressByID(title, id, self.pagesFolder),self.processText(fileText))
                 else:
                     continue
             elem.clear()
@@ -61,7 +62,7 @@ class Extractor:
 
 if __name__ == "__main__":
     page_from = 0
-    page_to = 5000000
+    page_to = 80000#float('Inf')
     print 'Fetching pages from', page_from, 'to', page_to
     bigFileAdress = str(sys.argv[1])
     pageRangeToExtract = [page_from, page_to]
