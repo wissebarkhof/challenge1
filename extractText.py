@@ -38,7 +38,7 @@ class Extractor:
                 if index < self.start:
                     elem.clear()
                     continue
-                if elem.find(blockStart + 'redirect') == None:
+                if elem.find(blockStart + 'redirect') != None:
                     elem.clear()
                     continue
 
