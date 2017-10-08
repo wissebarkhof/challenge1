@@ -35,7 +35,7 @@ class QueryExecuter:
         if (matchObj):
             return matchObj
 
-    def findQueryFromFile(self, query, fNames, pagesDir = './pages'):
+    def findQueryFromFile(self, query, fNames, pagesDir = './pages_all'):
         out = []
         print 'There are ', len(fNames), 'pages to run', query
         for name in fNames:
@@ -57,7 +57,7 @@ class QueryExecuter:
         for s in startL:
             print 'loading indeces for pages starting with', s
             if self.d[s] == None:
-                with open('./indexed/indexFile_' + s + '.json', 'r') as fp:
+                with open('./indexed_all/indexFile_' + s + '.json', 'r') as fp:
                     k = json.load(fp)
                 for i in k:
                     k[i] = set(k[i])
@@ -73,4 +73,3 @@ class QueryExecuter:
             fileIndexesToLook = set.intersection(*[self.getFromIndex(string, s) for string in self.strings])
             allFSet = allFSet.union(set([s + '/' + str(f)+'.txt' for f in fileIndexesToLook]))
         return self.findQueryFromFile(query, allFSet)
-

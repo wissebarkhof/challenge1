@@ -13,7 +13,6 @@ class WikiIndexer:
         if file_names:
             self.file_names = file_names
         else:
-            raise Exception('No file to index given')
             self.file_names = os.listdir(page_folder)
         self.index = defaultdict(set)
 
@@ -55,7 +54,7 @@ class WikiIndexer:
         print 'Found', len(indeces), 'number of texts'
 
 if __name__ == "__main__":
-    indexer = WikiIndexer('indexed_all', 'pages')
+    indexer = WikiIndexer('pages_all', 'indexed_all')
     indexer.build_index()
     print 'Found ', len(indexer.index.keys()), 'different words to index'
     test_words = [

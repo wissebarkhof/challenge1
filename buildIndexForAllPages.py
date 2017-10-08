@@ -14,7 +14,7 @@ class indexerMaster:
             subPageFolder = self.page_folder+"/"+first+"/"
             fNames = os.listdir(subPageFolder)
             if fNames:
-                indexer = buildIndex.WikiIndexer(subPageFolder, file_names=fNames)
+                indexer = buildIndex.WikiIndexer(subPageFolder, 'indexed_all', file_names=fNames)
                 indexer.build_index()
                 name = first
                 indexer.json_dump(name.lower())
