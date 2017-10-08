@@ -1,4 +1,4 @@
 *.pyc
-pages
-indexed
+pages*
+indexed*
 oldFiles
