@@ -13,6 +13,7 @@ if __name__ == "__main__":
                 }
         }
     for file_name in os.listdir(path_to_validation_queries):
+        # transform file-names to query format
         query = file_name.split('.')[0]
         split = re.split(r'\[(.*?)\]', query)
         strings = ['"{0}"'.format(string) for string in split[::2]]
@@ -23,20 +24,22 @@ if __name__ == "__main__":
             'query' : processed,
             'output': output
         }
-    print 'Searching', len(os.listdir('pages_all')), 'folders....'
-    index_load_start = time.clock()
-    queryExecuter.loadIndexesFromLetters(search_letters)
-    print 'Loading index took', time.clock() - index_load_start, 'seconds'
     for file_name in test_data:
         start = time.clock()
-        result = queryExecuter.findQueryFromLettersGiven(test_data[file_name]['query'], search_letters)
+        # to run in pages startung with 'a'
+        # result = queryExecuter.runQueryRaw(test_data[file_name]['query'], 'pages_new', 'a')
+        # to run only on the page 'Abderus.txt'
+        # result = queryExecuter.runQueryRaw(test_data[file_name]['query'], 'pages_new', 'a/Abderus.txt')
+        # run on all pages in the pages_new directory and it's subdirectories
+        result = queryExecuter.runQueryRaw(test_data[file_name]['query'], 'pages_new')
+
         end = time.clock()
         if result:
-            print 'we found', len(result), 'results:'
+            print 'we found', len(result), 'results for:', test_data[file_name]['query']
             for string in result:
                 print '  --  result:', string
         else:
-            print '++++++++++++  we found 0 results for the query ++++++++++++++'
+            print '++++++++++++  we found 0 results for',test_data[file_name]['query'], '++++++++++++++'
         print 'Running time :', (end - start), '\n----------------------------------------------------------------\n'
         test_data[file_name]['results'] = {
             'time': end - start,

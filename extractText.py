@@ -14,6 +14,7 @@ class Extractor:
 
     def titleToFileName(self,title):
         return './pages_all/' + re.sub(r'\W', '', title) + '.txt'
+
     def checkAllSubFolders(self, folderNames = CONSTANTS.letters):
         for f in folderNames:
             directory = self.pagesFolder+f
@@ -51,7 +52,7 @@ class Extractor:
                     title = titleElem.text
                     if title != None and fileText!=None and title !='':
                         id = elem.find(blockStart+'id').text
-                        self.saveToFile(utils.titleToFileAdressByID(title, id, self.pagesFolder),self.processText(fileText))
+                        self.saveToFile(utils.titleToFileAdress(title, self.pagesFolder), self.processText(fileText))
                 else:
                     continue
             elem.clear()
@@ -64,8 +65,8 @@ class Extractor:
 
 if __name__ == "__main__":
     page_from = 0
-    page_to = 10000000
+    page_to = 100000
     print 'Fetching pages from', page_from, 'to', page_to
     bigFileAdress = str(sys.argv[1])
-    extractor = Extractor(bigFileAdress, [page_from, page_to], 'pages_all/')
+    extractor = Extractor(bigFileAdress, [page_from, page_to], 'pages_new/')
     extractor.extractTextFromHugeXML()
