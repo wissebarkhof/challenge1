@@ -7,13 +7,12 @@ import nltk
 import utils
 
 class WikiIndexer:
-    def __init__(self, page_folder, file_names = None):
+    def __init__(self, page_folder, output_name, file_names = None):
         self.page_folder = page_folder
-
-        if file_names != None:
+        self.output_name = output_name
+        if file_names:
             self.file_names = file_names
         else:
-            raise Exception('No file to index given')
             self.file_names = os.listdir(page_folder)
         self.index = defaultdict(set)
 
@@ -37,8 +36,10 @@ class WikiIndexer:
 
     def json_dump(self,name):
         if name:
-            outfile_name = 'indexed/indexFile_{0}'.format(name)
+            outfile_name = '{0}/indexFile_{1}'.format(self.output_name, name)
         else:
+            outfile_name = '{0}/index_first_{1}_texts_pickle'.format(self.output_name, self.get_number_of_texts())
+
             raise Exception('A problem with file name')
         print 'JSON dumping index in ', outfile_name
 
@@ -53,7 +54,7 @@ class WikiIndexer:
         print 'Found', len(indeces), 'number of texts'
 
 if __name__ == "__main__":
-    indexer = WikiIndexer('pages')
+    indexer = WikiIndexer('pages_all', 'indexed_all')
     indexer.build_index()
     print 'Found ', len(indexer.index.keys()), 'different words to index'
     test_words = [

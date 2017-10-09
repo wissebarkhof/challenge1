@@ -1,10 +1,12 @@
 import json
 from pymongo import MongoClient
+import CONSTANTS
+def jsonToMongo(letters, indexFolder = CONSTANTS.indexFolder):
 
-def jsonToMongo(letters):
     for s in letters:
+        print "working for ",s
         d = dict()
-        with open('./indexed/indexFile_' + s + '.json', 'r') as fp:
+        with open(indexFolder+'/indexFile_' + s + '.json', 'r') as fp:
             k = json.load(fp)
         client = MongoClient()
         client = MongoClient('mongodb://localhost:27017/')
@@ -14,3 +16,5 @@ def jsonToMongo(letters):
         toSave = [{'k': myId, 'indexes': k[myId]} for myId in k]
         print 'Now inserting'
         result = posts.insert_many(toSave)
+
+jsonToMongo('JKL'.lower())

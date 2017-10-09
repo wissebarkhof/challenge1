@@ -62,9 +62,8 @@ class Extractor:
 
 if __name__ == "__main__":
     page_from = 0
-    page_to = float('Inf')
+    page_to = 80000#float('Inf')
     print 'Fetching pages from', page_from, 'to', page_to
     bigFileAdress = str(sys.argv[1])
-    pageRangeToExtract = [page_from, page_to]
-    extractor = Extractor(bigFileAdress,pageRangeToExtract)
+    extractor = Extractor(bigFileAdress, [page_from, page_to], 'pages_new_all/')
     extractor.extractTextFromHugeXML()

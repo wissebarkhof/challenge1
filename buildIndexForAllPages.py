@@ -9,12 +9,12 @@ class indexerMaster:
         self.page_folder = page_folder
 
     def createAllIndexesByStartingLetter(self):
-        for first in CONSTANTS.letters[12:]:
+        for first in CONSTANTS.letters:
             print 'Creating index for "', first, '"'
             subPageFolder = self.page_folder+"/"+first+"/"
             fNames = os.listdir(subPageFolder)
             if fNames:
-                indexer = buildIndex.WikiIndexer(subPageFolder, file_names=fNames)
+                indexer = buildIndex.WikiIndexer(subPageFolder, 'indexed_all', file_names=fNames)
                 indexer.build_index()
                 name = first
                 indexer.json_dump(name.lower())
