@@ -9,7 +9,7 @@ class indexerMaster:
         self.page_folder = page_folder
 
     def createAllIndexesByStartingLetter(self):
-        for first in CONSTANTS.letters:
+        for first in CONSTANTS.letters[12:]:
             print 'Creating index for "', first, '"'
             subPageFolder = self.page_folder+"/"+first+"/"
             fNames = os.listdir(subPageFolder)
@@ -28,7 +28,7 @@ class indexerMaster:
 
 
 if __name__ == "__main__":
-    master = indexerMaster('pages')
+    master = indexerMaster(CONSTANTS.pagesFolder)
     print 'START'
     master.createAllIndexesByStartingLetter()
     # master.creatAllIndexAsAWhole()

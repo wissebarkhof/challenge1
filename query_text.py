@@ -1,14 +1,9 @@
-import re, ast, sys, time, os,codecs
-import pickle
-import json
+import re, ast, codecs
 import CONSTANTS
+from pymongo import MongoClient
 
 class QueryExecuter:
     def __init__(self):
-        self.jsonLoaded = False
-        self.jsonFTable = None
-        self.jsonIndexes = None
-        self.d = {n: None for n in CONSTANTS.letters}
         self.strings = []
         self.wild_cards = []
 
@@ -35,7 +30,7 @@ class QueryExecuter:
         if (matchObj):
             return matchObj
 
-    def findQueryFromFile(self, query, fNames, pagesDir = './pages'):
+    def findQueryFromFile(self, query, fNames, pagesDir = CONSTANTS.pagesFolder):
         out = []
         print 'There are ', len(fNames), 'pages to run', query
         for name in fNames:
@@ -50,19 +45,16 @@ class QueryExecuter:
         return out
 
     def getFromIndex(self, string, letter):
-        return self.d[letter].get(string, set())
+        s = 'indexDatabase_'+letter.lower()
+        client = MongoClient()
+        client = MongoClient('mongodb://localhost:27017/')
+        db = client[s]
+        posts = db.posts
+        ind = posts.find_one({"id": string})
+        if ind!=None:
+            return set(ind['indexes'])
+        return None
 
-    def loadIndexesFromLetters(self, startL):
-        print 'loading all needed indexes for', startL
-        for s in startL:
-            print 'loading indeces for pages starting with', s
-            if self.d[s] == None:
-                with open('./indexed/indexFile_' + s + '.json', 'r') as fp:
-                    k = json.load(fp)
-                for i in k:
-                    k[i] = set(k[i])
-                self.d[s] = k
-                k = None
 
 
     def findQueryFromLettersGiven(self, query, startL):
@@ -73,4 +65,3 @@ class QueryExecuter:
             fileIndexesToLook = set.intersection(*[self.getFromIndex(string, s) for string in self.strings])
             allFSet = allFSet.union(set([s + '/' + str(f)+'.txt' for f in fileIndexesToLook]))
         return self.findQueryFromFile(query, allFSet)
-

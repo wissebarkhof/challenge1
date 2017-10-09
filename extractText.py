@@ -62,7 +62,7 @@ class Extractor:
 
 if __name__ == "__main__":
     page_from = 0
-    page_to = 80000#float('Inf')
+    page_to = float('Inf')
     print 'Fetching pages from', page_from, 'to', page_to
     bigFileAdress = str(sys.argv[1])
     pageRangeToExtract = [page_from, page_to]

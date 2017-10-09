@@ -3,9 +3,11 @@ import time
 import CONSTANTS
 import os, re
 
+pagesFolder = CONSTANTS.pagesFolder
+
 if __name__ == "__main__":
     queryExecuter = query_text.QueryExecuter()
-    search_letters = CONSTANTS.letters
+    search_letters = 'b'
     path_to_validation_queries = 'validation_queries'
     test_data = {
             'own_test': {
@@ -23,8 +25,7 @@ if __name__ == "__main__":
             'query' : processed,
             'output': output
         }
-    print 'Searching', len(os.listdir('pages')), 'files....'
-    queryExecuter.loadIndexesFromLetters(search_letters)
+    print 'Searching', len(os.listdir(pagesFolder)), 'files....'
     for file_name in test_data:
         start = time.clock()
         result = queryExecuter.findQueryFromLettersGiven(test_data[file_name]['query'], search_letters)
