@@ -65,7 +65,7 @@ class QueryExecuter:
             with open(pagesDir + '/' + path) as text:
                 result = self.findQuery(query, text.read())
         elif path and len(path) == 1 and path != '/':
-            print 'looking in all files with the letter "' + pagesDir + '/' + path + '" (', len(os.listdir(pagesDir + '/' + path)), ')' 
+            print 'looking in all files with the letter "' + pagesDir + '/' + path + '" (', len(os.listdir(pagesDir + '/' + path)), ')'
             for filename in os.listdir(pagesDir + '/' + path):
                 with open(pagesDir + '/' + path + '/' + filename) as text:
                     result += self.findQuery(query, text.read())
@@ -73,6 +73,8 @@ class QueryExecuter:
             print 'looking in all files in the folders in', pagesDir
             for folder in os.listdir(pagesDir):
                 print 'looking in {0} \r'.format(folder)
+                if not os.path.isdir(pagesDir + '/' + folder):
+                    continue
                 for filename in os.listdir(pagesDir + '/' + folder):
                     print 'currently scanning {0} \r'.format(filename),
                     with open(pagesDir + '/' + folder + '/' + filename) as text:

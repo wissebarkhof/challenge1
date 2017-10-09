@@ -23,24 +23,42 @@ runs = {
             'result': 2,
         }],
     },
-    # 'a': {
-    #     'test':[{
-    #         'query': '"arnold" [0,10] "schwarzenegger" [0,10] "is"',
-    #         'result': 14,
-    #     }, {
-    #         'query': '"apache" [0,100] "software"',
-    #         'result': 1517,
-    #     }, {
-    #         'query': '"aarhus" [30,150] "denmark"',
-    #         'result': 555,
-    #     },  {
-    #         'query': '"english" [0,100] "alphabet"',
+    'a': {
+        'test':[{
+            'query': '"arnold" [0,10] "schwarzenegger" [0,10] "is"',
+            'result': 14,
+        }, {
+            'query': '"apache" [0,100] "software"',
+            'result': 1517,
+        }, {
+            'query': '"aarhus" [30,150] "denmark"',
+            'result': 555,
+        },  {
+            'query': '"english" [0,100] "alphabet"',
+            'result': 181,
+        }, {
+            'query': '"first" [0,85] "letter" [0,100] "alphabet" [0,200] "consonant"',
+            'result': 3,
+        }]
+    },
+    # '/': {
+    #     'test': [{
+    #         'query': '"elephants" [0,20] "are" [0,20] "to"',
     #         'result': 181,
+    #     },{
+    #         'query': '"technical" [0,20] "university" [0,20] "denmark"',
+    #         'result': 611,
     #     }, {
-    #         'query': '"first" [0,85] "letter" [0,100] "alphabet" [0,200] "consonant"',
-    #         'result': 3,
-    #     }]
-    # },
+    #         'query': '"testing" [0,20] "with" [0,20] "a" [0,30] "lot" [0,4] "of [0,5] "words"',
+    #         'result': 0,
+    #     }, {
+    #         'query': '"stress" [0,250] "test"',
+    #         'result': 7355,
+    #     },{
+    #         'query': '"object" [10,200] "application" [0,100] "python" [10,200] "system" [0,100] "computer" [0,10] "science" [0,150] "linux" [0,200] "ruby"',
+    #         'result': 1,
+    #     },]
+    # }
 }
 
 # ['first', (0, 85), 'letter', (0, 100), 'alphabet', (0, 200), 'consonant']
@@ -81,7 +99,7 @@ if __name__ == "__main__":
             test['raw_outcome'] = {
                 'time': end - start,
                 'results': raw_result,
-                'accuracy': round(float(len(raw_result)) / test['result'], 4)
+                'accuracy': round(float(len(raw_result)) / test['result'], 4) if test['result'] > 0 else 1
 
             }
             # start = time.clock()
@@ -102,9 +120,23 @@ if __name__ == "__main__":
             #
             # }
     print '\nSUMMARY'
+    raw_output_file = open('raw_query_results.txt', 'w')
+    indexed_output_file = open('indexed_query_results.txt', 'w')
+
     for run in runs:
+        print 'summarying', run
         for test in runs[run]['test']:
             data = test['raw_outcome']
-            print test['query'], len(data['results']), 'res\t', data['time'], 's\t', data['accuracy'], 'acc\t'
+            summary = '\n' + run + '\t' + test['query'] + '\t' + str(len(data['results'])) + ' res\t' + str(data['time']) + 's\t' + str(data['accuracy']) + ' acc\n'
+            print summary
+            raw_output_file.write(summary)
+            for result in data['results']:
+                raw_output_file.write(result + '\n')
+
+            # uncomment this
             # data = test['indexed_outcome']
-            # print test['query'], len(data['results']), 'res\t', data['time'], 's\t', data['accuracy'], 'acc\t'
+            # summary = '\n' + run + '\t' + test['query'] + '\t' + str(len(data['results'])) + ' res\t' + str(data['time']) + 's\t' + str(data['accuracy']) + ' acc\n'
+            # print summary
+            # indexed_output_file.write(summary)
+            # for result in data['results']:
+            #     indexed_output_file.write(result + '\n')
