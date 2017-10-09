@@ -9,7 +9,8 @@ if __name__ == "__main__":
     path_to_validation_queries = 'validation_queries'
     test_data = {
             'own_test': {
-                    'query': '"wikipedia" [0,10] "links" [0,1000] "the"'
+                    'query': '"wikipedia" [0,10] "links" [0,1000] "the"',
+                    'output': []
                 }
         }
     for file_name in os.listdir(path_to_validation_queries):
@@ -31,7 +32,7 @@ if __name__ == "__main__":
         # to run only on the page 'Abderus.txt'
         # result = queryExecuter.runQueryRaw(test_data[file_name]['query'], 'pages_new', 'a/Abderus.txt')
         # run on all pages in the pages_new directory and it's subdirectories
-        result = queryExecuter.runQueryRaw(test_data[file_name]['query'], 'pages_new')
+        result = queryExecuter.runQueryRaw(test_data[file_name]['query'], 'pages_new_all')
 
         end = time.clock()
         if result:
@@ -43,9 +44,11 @@ if __name__ == "__main__":
         print 'Running time :', (end - start), '\n----------------------------------------------------------------\n'
         test_data[file_name]['results'] = {
             'time': end - start,
-            'results': result
+            'results': result,
+            'accuracy': round(float(len(result)) / len(test_data[file_name]['output']), 4) if len(test_data[file_name]['output']) > 0 else 0
+
         }
     print '\nSUMMARY'
     for file_name in test_data:
         data = test_data[file_name]
-        print data['query'], '\t', len(data['results']['results']), 'results\t', data['results']['time'], 'seconds'
+        print data['query'], '\t', len(data['results']['results']), 'results\t', data['results']['time'], 'seconds\t', data['results']['accuracy'], 'accuracy'

@@ -72,7 +72,9 @@ class QueryExecuter:
         else:
             print 'looking in all files in the folders in', pagesDir
             for folder in os.listdir(pagesDir):
+                print 'looking in {0} \r'.format(folder),
                 for filename in os.listdir(pagesDir + '/' + folder):
+                    print 'currently scanning {0} \r'.format(filename),
                     with open(pagesDir + '/' + folder + '/' + filename) as text:
                         result += self.findQuery(query, text.read())
         return result
