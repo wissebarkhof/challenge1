@@ -3,16 +3,10 @@ import time
 import CONSTANTS
 import os, re
 
-if __name__ == "__main__":
-    queryExecuter = query_text.QueryExecuter()
-    search_letters = 'a'
-    path_to_validation_queries = 'validation_queries'
-    test_data = {
-            'own_test': {
-                    'query': '"wikipedia" [0,10] "links" [0,1000] "the"',
-                    'output': []
-                }
-        }
+
+
+def getValidationData(path_to_validation_queries):
+    test_data = {}
     for file_name in os.listdir(path_to_validation_queries):
         # transform file-names to query format
         query = file_name.split('.')[0]
@@ -25,14 +19,21 @@ if __name__ == "__main__":
             'query' : processed,
             'output': output
         }
+    return test_data
+
+if __name__ == "__main__":
+    queryExecuter = query_text.QueryExecuter()
+    search_letters = 'a'
+    path_to_validation_queries = 'validation_queries'
+    test_data = getValidationData(path_to_validation_queries)
     for file_name in test_data:
         start = time.clock()
         # to run in pages startung with 'a'
-        # result = queryExecuter.runQueryRaw(test_data[file_name]['query'], 'pages_new', 'a')
-        # to run only on the page 'Abderus.txt'
-        # result = queryExecuter.runQueryRaw(test_data[file_name]['query'], 'pages_new', 'a/Abderus.txt')
+        # result = queryExecuter.runQueryRaw(test_data[file_name]['query'], 'pages_new_all', 'a')
+        # to run only on the page 'Cat.txt'
+        result = queryExecuter.runQueryRaw(test_data[file_name]['query'], 'pages_new_all', 'c/Cat.txt')
         # run on all pages in the pages_new directory and it's subdirectories
-        result = queryExecuter.runQueryRaw(test_data[file_name]['query'], 'pages_new_all')
+        # result = queryExecuter.runQueryRaw(test_data[file_name]['query'], 'pages_new_all')
 
         end = time.clock()
         if result:
