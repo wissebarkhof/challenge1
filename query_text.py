@@ -6,7 +6,7 @@ class QueryExecuter:
     def __init__(self):
         self.strings = []
         self.wild_cards = []
-
+        self.client = MongoClient('mongodb://localhost:27017/')
     def parseQuery(self, query):
         elements = query.split()
         self.strings = [string.replace('"', '') for string in elements[::2]]
@@ -46,16 +46,12 @@ class QueryExecuter:
 
     def getFromIndex(self, string, letter):
         s = 'indexDatabase_'+letter.lower()
-        client = MongoClient()
-        client = MongoClient('mongodb://localhost:27017/')
-        db = client[s]
+        db = self.client[s]
         posts = db.posts
         ind = posts.find_one({"id": string})
         if ind!=None:
             return set(ind['indexes'])
         return None
-
-
 
     def findQueryFromLettersGiven(self, query, startL):
         print 'Looking for', query, '...'
