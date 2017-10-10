@@ -1,5 +1,7 @@
 import re
 import unicodedata
+import urllib2
+import json
 
 def titleToFileAdress(title, pagesFolder):
     def is_ascii(s):
@@ -19,3 +21,13 @@ def titleToFileAdressByID(title,id, pagesFolder):
         return pagesFolder +  r"/other/" + id + '.txt'
     return pagesFolder+'/' + fileName[0].lower() + r"/" + id + '.txt'
 
+
+def getIdByTitle(title):
+    url = "https://en.wikipedia.org/w/api.php?action=query&titles=" + title + '&format=json'
+    response = urllib2.urlopen(url)
+    myJson = response.read()
+    a = json.loads(myJson)
+    return a['query']['pages'].keys()[0]
+
+
+print getIdByTitle('cat')

@@ -5,3 +5,5 @@ toyPagesFolder = "../toyPages"
 
 indexFolder = "../indexed"
 toyIndexFolder = "../toyIndexed"
+
+bigFileAddress = "/home/ahmet/Downloads/enwiki-20170820-pages-articles.xml"

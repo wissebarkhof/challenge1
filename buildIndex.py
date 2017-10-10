@@ -7,11 +7,13 @@ import nltk
 import utils
 
 class WikiIndexer:
+    #This class builds index pages. It is controlled by buildIndexForAllPages.py
+
     def __init__(self, page_folder, output_name, file_names = None):
-        self.page_folder = page_folder
+        self.page_folder = page_folder # Folder where pages are stored
         self.output_name = output_name
         if file_names:
-            self.file_names = file_names
+            self.file_names = file_names # Files to index
         else:
             self.file_names = os.listdir(page_folder)
         self.index = defaultdict(set)
@@ -20,21 +22,21 @@ class WikiIndexer:
         return len(self.file_names)
 
     def __clean_text(self, text):
-        tokens = nltk.word_tokenize(text)
+        tokens = nltk.word_tokenize(text)# This is the function we used to get words in a page
         return tokens
 
     def build_index(self):
-        for fIndex in range(len(self.file_names)):
+        for fIndex in range(len(self.file_names)): # For every page
             print '{0}/{1} \r'.format(fIndex, len(self.file_names)),
             fName = self.file_names[fIndex]
             indexToSave = fName[:-4]#Only part without txt
             f = codecs.open(self.page_folder+fName, 'r')
             text = f.read().decode('utf-8')
-            words = self.__clean_text(text)
+            words = self.__clean_text(text) # Get all the words in this page
             for word in words:
-                self.index[word].add(indexToSave)
+                self.index[word].add(indexToSave) # Save it to the index
 
-    def json_dump(self,name):
+    def json_dump(self,name): #json saving
         if name:
             outfile_name = '{0}/indexFile_{1}'.format(self.output_name, name)
         else:
@@ -48,7 +50,7 @@ class WikiIndexer:
 
         with open(outfile_name + '.json', 'w') as fp:
             json.dump(self.index, fp)
-    def mongoDump(self,name):
+    def mongoDump(self,name): # MongoDB saving
         from pymongo import MongoClient
         client = MongoClient()
         client = MongoClient('mongodb://localhost:27017/')

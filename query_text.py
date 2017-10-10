@@ -3,14 +3,18 @@ import CONSTANTS
 from pymongo import MongoClient
 
 class QueryExecuter:
+
+    #This class runs the queries
+
     def __init__(self,useJSON = False, indexFolder = None, pagesFolder = CONSTANTS.pagesFolder):
-        self.useJSON = useJSON
-        self.pagesFolder = pagesFolder
+        self.useJSON = useJSON #We can use JSON or MongoDB as index databases
+        self.pagesFolder = pagesFolder#Page folder to look
         if(self.useJSON):
             self.jsonLoaded = False
             self.jsonFTable = None
             self.jsonIndexes = None
-            self.d = {n: None for n in CONSTANTS.letters}
+            self.d = {n: None for n in CONSTANTS.letters}#If JSON is used we will load all indexes as dictionary
+            #Keys are words and values are ids of files which these word is passing -> "cat":[1,188,193]
             if indexFolder == None:
                 raise Exception('Give an index folder')
             else:
@@ -21,12 +25,12 @@ class QueryExecuter:
         self.client = MongoClient('mongodb://localhost:27017/')
         self.regex = ''
 
-    def parseQuery(self, query):
+    def parseQuery(self, query): #Divide query into words and wild cards
         elements = query.split()
         self.strings = [string.replace('"', '') for string in elements[::2]]
         self.wild_cards = [ast.literal_eval(element) for element in elements[1::2]]
 
-    def buildRegex(self,query):
+    def buildRegex(self,query):#Get regex string
         self.parseQuery(query)
         regex_string = r''
         for index, string in enumerate(self.strings):
@@ -37,7 +41,7 @@ class QueryExecuter:
                 regex_string += unknown
         return regex_string
 
-    def findQuery(self,query, text):
+    def findQuery(self,query, text):#Run regex on text
         if not self.regex or self.regex == '':
             self.regex = self.buildRegex(query)
         matchObj = re.findall(self.regex, text)
@@ -46,7 +50,8 @@ class QueryExecuter:
         else:
             return []
 
-    def findQueryFromFile(self, query, fNames):
+    def findQueryFromFile(self, query, fNames):#Finds results from a list of files
+        #Basically reads files and run regex on them
         pagesDir = self.pagesFolder
         # initialize all query data
         self.regex = ''
@@ -64,7 +69,8 @@ class QueryExecuter:
                 out += x
         return out
 
-    def runQueryRaw(self, query, pagesDir = './pages_new', path = None):
+    def runQueryRaw(self, query, path = None):#Brute force approach
+        pagesDir = self.pagesFolder
         # initialize all query data
         self.regex = ''
         self.strings = self.wild_cards = []
@@ -88,21 +94,25 @@ class QueryExecuter:
                         result += self.findQuery(query, text.read())
         return result
 
-    def getFromIndex(self, string, letter):
+    def getFromIndex(self, word, letter):#Gets the indexes
+        #Index files are organized in terms of letters
+        #So if one tries to look only the pages where "cat" is passing and where the title of the page starts with 'a'
+        #Just have self.d['a'].get("cat", set())
+        #OR self.client['a'].posts.find_one({"k":"cat"}) // FOR MONGODB
         if not self.useJSON:
             s = 'indexDatabase_'+letter.lower()
             db = self.client[s]
             posts = db.posts
-            ind = posts.find_one({"k": string})
+            ind = posts.find_one({"k": word})
             if ind!=None:
                 return set(ind['indexes'])
             return set()
         else:
             if not self.jsonLoaded:
                 self.loadIndexesFromLetters(CONSTANTS.letters)
-            return self.d[letter].get(string, set())
+            return self.d[letter].get(word, set())
 
-    def loadIndexesFromLetters(self, startL):
+    def loadIndexesFromLetters(self, startL):#It loads json index files !!WARNING NOT FEASIBLE FOR BIG FILES
         print 'loading all needed indexes for', startL
         for s in startL:
             print 'loading indeces for pages starting with', s
@@ -114,12 +124,13 @@ class QueryExecuter:
                 self.d[s] = k
                 k = None
 
-
-    def findQueryFromLettersGiven(self, query, startL):
+    def word_index_findQueryFromLettersGiven(self, query, startL):#Word index query function
+        #StartL is the letters to look for , so if we only look in letter 'a' startL = 'a'
         print 'Looking for', query, '...'
         allFSet = set()
         self.parseQuery(query)
         for s in startL:
-            fileIndexesToLook = set.intersection(*[self.getFromIndex(string, s) for string in self.strings])
+            fileIndexesToLook = set.intersection(*[self.getFromIndex(string, s) for string in self.strings])#Get the intersecting files
+            #for example cat:[1,2,10,15] dog:[10,12,15] then only do query in [10,15]
             allFSet = allFSet.union(set([s + '/' + str(f)+'.txt' for f in fileIndexesToLook]))
         return self.findQueryFromFile(query, allFSet)

@@ -2,6 +2,7 @@ import query_text
 import time
 import CONSTANTS
 import os, re
+import utils
 
 pagesFolder = CONSTANTS.pagesFolder
 
@@ -38,7 +39,7 @@ if __name__ == "__main__":
        # result = queryExecuter.runQueryRaw(test_data[file_name]['query'], 'pages_new', 'a/Abderus.txt')
         # run on all pages in the pages_new directory and it's subdirectories
         # result = queryExecuter.runQueryRaw(test_data[file_name]['query'], pagesFolder,'a')
-        result = queryExecuter.findQueryFromLettersGiven(test_data[file_name]['query'],search_letters)
+        result = queryExecuter.word_index_findQueryFromLettersGiven(test_data[file_name]['query'], search_letters)
         end = time.clock()
         if result:
             print 'we found', len(result), 'results for:', test_data[file_name]['query']
