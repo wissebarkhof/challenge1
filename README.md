@@ -11,6 +11,12 @@ to install:
  * download the 'popular' category
 
 
+to use and install with mongoDB:%Note that you should be able to run withoud mongodb
+
+* install mongoDB % A bit complex so skipped here
+* sudo pip install pymongo
+
+
  --- HOW to run a small demo?
 
 1)  First go to the CONSTANTS.py file and change `bigFileAddress` to the address of the wikipedia xml file
