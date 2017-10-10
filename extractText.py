@@ -63,8 +63,8 @@ class Extractor:
 
 if __name__ == "__main__":
     page_from = 0
-    page_to = 10000#float('Inf')
+    page_to = 5000#float('Inf')
     print 'Fetching pages from', page_from, 'to', page_to
-    bigFileAdress = CONSTANTS.big
-    extractor = Extractor(bigFileAdress, [page_from, page_to], CONSTANTS.toyPagesFolder)
+    bigFileAdress = CONSTANTS.bigFileAddress
+    extractor = Extractor(bigFileAdress, [page_from, page_to], CONSTANTS.miniPagesFolder)
     extractor.extractTextFromHugeXML()

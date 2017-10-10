@@ -10,16 +10,17 @@ class QueryExecuter:
         self.useJSON = useJSON #We can use JSON or MongoDB as index databases
         self.pagesFolder = pagesFolder#Page folder to look
         if(self.useJSON):
-            self.jsonLoaded = False
+
             self.jsonFTable = None
             self.jsonIndexes = None
-            self.d = {n: None for n in CONSTANTS.letters}#If JSON is used we will load all indexes as dictionary
+            self.d = {n: {} for n in CONSTANTS.letters}#If JSON is used we will load all indexes as dictionary
             #Keys are words and values are ids of files which these word is passing -> "cat":[1,188,193]
             if indexFolder == None:
                 raise Exception('Give an index folder')
             else:
                 self.indexFolder = indexFolder
             self.loadIndexesFromLetters(CONSTANTS.letters)
+            self.jsonLoaded = True
         self.strings = []
         self.wild_cards = []
         self.client = MongoClient('mongodb://localhost:27017/')
@@ -116,13 +117,16 @@ class QueryExecuter:
         print 'loading all needed indexes for', startL
         for s in startL:
             print 'loading indeces for pages starting with', s
-            if self.d[s] == None:
-                with open(self.indexFolder+'/indexFile_' + s + '.json', 'r') as fp:
-                    k = json.load(fp)
-                for i in k:
-                    k[i] = set(k[i])
-                self.d[s] = k
-                k = None
+            if len(self.d[s]) == 0:
+
+                address = self.indexFolder+'/indexFile_' + s + '.json'
+                if os.path.exists(address):
+                    with open(address, 'r') as fp:
+                        k = json.load(fp)
+                    for i in k:
+                        k[i] = set(k[i])
+                    self.d[s] = k
+                    k = None
 
     def word_index_findQueryFromLettersGiven(self, query, startL):#Word index query function
         #StartL is the letters to look for , so if we only look in letter 'a' startL = 'a'

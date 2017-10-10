@@ -32,8 +32,8 @@ class indexerMaster:
                 indexer.mongoDump(name.lower())#Save the index to database
 
 if __name__ == "__main__":
-    indexFolder = CONSTANTS.toyIndexFolder
-    master = indexerMaster(CONSTANTS.toyPagesFolder, indexFolder)
+    indexFolder = CONSTANTS.miniIndexFolder
+    master = indexerMaster(CONSTANTS.miniPagesFolder, indexFolder)
     print 'START'
     # master.createAllIndexesByStartingLetterMongo()
     master.createAllIndexesByStartingLetterJSON()

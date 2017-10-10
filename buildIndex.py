@@ -11,7 +11,7 @@ class WikiIndexer:
 
     def __init__(self, page_folder, output_name, file_names = None):
         self.page_folder = page_folder # Folder where pages are stored
-        self.output_name = output_name
+        self.output_folder = output_name
         if file_names:
             self.file_names = file_names # Files to index
         else:
@@ -37,12 +37,13 @@ class WikiIndexer:
                 self.index[word].add(indexToSave) # Save it to the index
 
     def json_dump(self,name): #json saving
+        if not os.path.exists(self.output_folder):
+            os.makedirs(self.output_folder)
         if name:
-            outfile_name = '{0}/indexFile_{1}'.format(self.output_name, name)
+            outfile_name = '{0}/indexFile_{1}'.format(self.output_folder, name)
         else:
-            outfile_name = '{0}/index_first_{1}_texts_pickle'.format(self.output_name, self.get_number_of_texts())
-
             raise Exception('A problem with file name')
+
         print 'JSON dumping index in ', outfile_name
 
         for i in self.index:
