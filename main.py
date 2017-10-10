@@ -31,7 +31,7 @@ if __name__ == "__main__":
             queryLetters = raw_input("Title?").lower()
 
         query = raw_input('enter the query')
-
+##
         if queryType == 'w':
             if queryRange == 'p':
                 r = utils.getIdByTitle(queryLetters) + '.txt'
