@@ -1,12 +1,12 @@
 import xml.etree.ElementTree as etree
-import re, codecs, urllib2, sys
+import codecs,  sys
 import CONSTANTS
 import os
 import utils
 
 class Extractor:
 
-    def __init__(self, fileAdress, pageRange = [0, float('inf')], pagesFolder = './pages/'):
+    def __init__(self, fileAdress, pageRange = [0, float('inf')], pagesFolder = CONSTANTS.pagesFolder):
         self.limit = pageRange[1]
         self.start = pageRange[0]
         self.fileAdress = fileAdress
@@ -15,7 +15,7 @@ class Extractor:
 
     def checkAllSubFolders(self, folderNames = CONSTANTS.letters):
         for f in folderNames:
-            directory = self.pagesFolder+f
+            directory = self.pagesFolder+'/'+f
             if not os.path.exists(directory):
                 os.makedirs(directory)
 
@@ -29,7 +29,7 @@ class Extractor:
         index = 0
         blockStart = '{http://www.mediawiki.org/xml/export-0.10/}'
         for event, elem in etree.iterparse(self.fileAdress, events=('start', 'end')):
-            if 'page' in elem.tag and event == 'start':
+            if 'page' in elem.tag :#and event == 'start':
                 # if index % 1000 == 0:
                 print 'Now processing {0} \r'.format(index),
                 index += 1
@@ -44,15 +44,15 @@ class Extractor:
 
                 textElem = elem.find(blockStart+'revision//'+blockStart+'text')
                 titleElem = elem.find(blockStart+'title')
-                if textElem!=None:
+                if textElem!=None and titleElem!=None:
                     fileText = textElem.text
                     title = titleElem.text
                     if title != None and fileText!=None and title !='':
                         id = elem.find(blockStart+'id').text
                         self.saveToFile(utils.titleToFileAdressByID(title, id, self.pagesFolder),self.processText(fileText))
+                        elem.clear()
                 else:
                     continue
-            elem.clear()
     def processText(self,s):
         s = s.lower()
         s = s.replace('\n', ' ')
@@ -61,9 +61,9 @@ class Extractor:
 
 
 if __name__ == "__main__":
-    page_from = 0
-    page_to = 80000#float('Inf')
+    page_from = 100000
+    page_to = 1000000#float('Inf')
     print 'Fetching pages from', page_from, 'to', page_to
     bigFileAdress = str(sys.argv[1])
-    extractor = Extractor(bigFileAdress, [page_from, page_to], 'pages_new_all/')
+    extractor = Extractor(bigFileAdress, [page_from, page_to], CONSTANTS.toyPagesFolder)
     extractor.extractTextFromHugeXML()

@@ -16,6 +16,6 @@ def titleToFileAdressByID(title,id, pagesFolder):
         return all(ord(c) < 128 for c in s)
     fileName = re.sub(r'\W', '', title)
     if not title[0].isalnum() or len(fileName) == 0:
-        return pagesFolder +  r"other/" + id + '.txt'
-    return pagesFolder + fileName[0].lower() + r"/" + id + '.txt'
+        return pagesFolder +  r"/other/" + id + '.txt'
+    return pagesFolder+'/' + fileName[0].lower() + r"/" + id + '.txt'
 

@@ -6,8 +6,9 @@ import os, re
 pagesFolder = CONSTANTS.pagesFolder
 
 if __name__ == "__main__":
-    queryExecuter = query_text.QueryExecuter()
-    search_letters = 'b'
+    # queryExecuter = query_text.QueryExecuter(useJSON=True, indexFolder = CONSTANTS.toyIndexFolder, pagesFolder=CONSTANTS.toyPagesFolder)
+    queryExecuter = query_text.QueryExecuter(pagesFolder=CONSTANTS.toyPagesFolder)
+    search_letters = CONSTANTS.letters
 
     path_to_validation_queries = 'validation_queries'
     test_data = {
@@ -34,10 +35,10 @@ if __name__ == "__main__":
         # to run in pages startung with 'a'
         # result = queryExecuter.runQueryRaw(test_data[file_name]['query'], 'pages_new', 'a')
         # to run only on the page 'Abderus.txt'
-        # result = queryExecuter.runQueryRaw(test_data[file_name]['query'], 'pages_new', 'a/Abderus.txt')
+       # result = queryExecuter.runQueryRaw(test_data[file_name]['query'], 'pages_new', 'a/Abderus.txt')
         # run on all pages in the pages_new directory and it's subdirectories
-        result = queryExecuter.runQueryRaw(test_data[file_name]['query'], 'pages_new_all')
-
+        # result = queryExecuter.runQueryRaw(test_data[file_name]['query'], pagesFolder,'a')
+        result = queryExecuter.findQueryFromLettersGiven(test_data[file_name]['query'],search_letters)
         end = time.clock()
         if result:
             print 'we found', len(result), 'results for:', test_data[file_name]['query']

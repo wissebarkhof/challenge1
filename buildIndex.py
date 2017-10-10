@@ -48,10 +48,17 @@ class WikiIndexer:
 
         with open(outfile_name + '.json', 'w') as fp:
             json.dump(self.index, fp)
-
+    def mongoDump(self,name):
+        from pymongo import MongoClient
+        client = MongoClient()
+        client = MongoClient('mongodb://localhost:27017/')
+        db = client['indexDatabase_'+name]
+        posts = db.posts
+        posts.insert_many([{'k': myId, 'indexes': list(self.index[myId])} for myId in self.index])
     def find_text(self, word):
         indeces = self.index[word]
         print 'Found', len(indeces), 'number of texts'
+
 
 if __name__ == "__main__":
     indexer = WikiIndexer('pages_all', 'indexed_all')

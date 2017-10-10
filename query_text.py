@@ -1,9 +1,21 @@
-import re, ast, codecs
+import re, ast, codecs,os,json
 import CONSTANTS
 from pymongo import MongoClient
 
 class QueryExecuter:
-    def __init__(self):
+    def __init__(self,useJSON = False, indexFolder = None, pagesFolder = CONSTANTS.pagesFolder):
+        self.useJSON = useJSON
+        self.pagesFolder = pagesFolder
+        if(self.useJSON):
+            self.jsonLoaded = False
+            self.jsonFTable = None
+            self.jsonIndexes = None
+            self.d = {n: None for n in CONSTANTS.letters}
+            if indexFolder == None:
+                raise Exception('Give an index folder')
+            else:
+                self.indexFolder = indexFolder
+            self.loadIndexesFromLetters(CONSTANTS.letters)
         self.strings = []
         self.wild_cards = []
         self.client = MongoClient('mongodb://localhost:27017/')
@@ -34,7 +46,8 @@ class QueryExecuter:
         else:
             return []
 
-    def findQueryFromFile(self, query, fNames, pagesDir = CONSTANTS.pagesFolder):
+    def findQueryFromFile(self, query, fNames):
+        pagesDir = self.pagesFolder
         # initialize all query data
         self.regex = ''
         self.strings = self.wild_cards = []
@@ -76,13 +89,31 @@ class QueryExecuter:
         return result
 
     def getFromIndex(self, string, letter):
-        s = 'indexDatabase_'+letter.lower()
-        db = self.client[s]
-        posts = db.posts
-        ind = posts.find_one({"id": string})
-        if ind!=None:
-            return set(ind['indexes'])
-        return None
+        if not self.useJSON:
+            s = 'indexDatabase_'+letter.lower()
+            db = self.client[s]
+            posts = db.posts
+            ind = posts.find_one({"k": string})
+            if ind!=None:
+                return set(ind['indexes'])
+            return set()
+        else:
+            if not self.jsonLoaded:
+                self.loadIndexesFromLetters(CONSTANTS.letters)
+            return self.d[letter].get(string, set())
+
+    def loadIndexesFromLetters(self, startL):
+        print 'loading all needed indexes for', startL
+        for s in startL:
+            print 'loading indeces for pages starting with', s
+            if self.d[s] == None:
+                with open(self.indexFolder+'/indexFile_' + s + '.json', 'r') as fp:
+                    k = json.load(fp)
+                for i in k:
+                    k[i] = set(k[i])
+                self.d[s] = k
+                k = None
+
 
     def findQueryFromLettersGiven(self, query, startL):
         print 'Looking for', query, '...'

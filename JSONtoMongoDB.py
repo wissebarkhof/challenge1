@@ -1,7 +1,7 @@
 import json
 from pymongo import MongoClient
 import CONSTANTS
-def jsonToMongo(letters, indexFolder = CONSTANTS.indexFolder):
+def jsonToMongo(letters, indexFolder = CONSTANTS.toyIndexFolder):
 
     for s in letters:
         print "working for ",s
@@ -17,4 +17,4 @@ def jsonToMongo(letters, indexFolder = CONSTANTS.indexFolder):
         print 'Now inserting'
         result = posts.insert_many(toSave)
 
-jsonToMongo('JKL'.lower())
+jsonToMongo(CONSTANTS.letters)
