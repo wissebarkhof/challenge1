@@ -18,8 +18,15 @@ to install:
 3)  Run buildIndexForAllPages.py This creates an index folder. You can change this folder by editing CONSTANTS miniIndexFolder
 4)  Run main.py
 
- Here you will be asked to run your query you can for example try w/w/ "cats" [1,10] "dogs"
+ Here you will be asked to run your query you can
  This will run query using word indexing method
  Note that since we are running only in a small dataset results do not cover all wiki
  Also if you try to work on a specific page
 
+Examples
+
+in main try /w/p/anarchism "anarchy" [1,50] "go"
+            /w/w/ "anarchy" [1,50] "go"
+            /w/l/ a "anarchy" [1,50] "go"
+            /b/w/ "anarchy" [1,50] "go"
+            /b/l/ a "anarchy" [1,50] "go"

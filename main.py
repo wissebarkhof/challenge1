@@ -34,7 +34,7 @@ if __name__ == "__main__":
 ##
         if queryType == 'w':
             if queryRange == 'p':
-                r = utils.getIdByTitle(queryLetters) + '.txt'
+                r = queryLetters[0]+'/'+utils.getIdByTitle(queryLetters) + '.txt'
                 indexedResult = queryExecuter.findQueryFromFile(query, [r])
                 showOutput(indexedResult)
             if queryRange == 'w':
