@@ -11,7 +11,7 @@ to install:
  * download the 'popular' category
 
 
-to use and install with mongoDB:%Note that you should be able to run withoud mongodb
+to use and install with mongoDB:%Note that you should be able to run withoud mongodb only with pymongo
 
 * install mongoDB % A bit complex so skipped here
 * sudo pip install pymongo
